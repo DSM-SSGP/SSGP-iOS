@@ -18,8 +18,18 @@ let project = Project(
             sources: ["Sources/**"],
             resources: ["Resources/**"],
             actions: [
-                TargetAction.pre(script: "${PODS_ROOT}/SwiftLint/swiftlint",
-                                 name: "SwiftLint"
+                TargetAction.pre(
+                    script: "${PODS_ROOT}/SwiftLint/swiftlint",
+                    name: "SwiftLint"
+                ),
+                TargetAction.pre(
+                    path: Path("Scripts/RSwiftRunScript.sh"),
+                    arguments: [],
+                    name: "R.Swift",
+                    inputPaths: [Path.init("$TEMP_DIR/rswift-lastrun")],
+                    inputFileListPaths: [],
+                    outputPaths: [Path.init("$SRCROOT/Supporting Files/R.generated.swift")],
+                    outputFileListPaths: []
                 )
             ],
             dependencies: [

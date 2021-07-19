@@ -18,7 +18,9 @@ let project = Project(
             sources: ["Sources/**"],
             resources: ["Resources/**"],
             actions: [
-                
+                TargetAction.pre(script: "${PODS_ROOT}/SwiftLint/swiftlint",
+                                 name: "SwiftLint"
+                )
             ],
             dependencies: [
                 .cocoapods(path: ".")

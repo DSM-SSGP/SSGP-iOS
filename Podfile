@@ -26,5 +26,6 @@ target 'SSGP' do
   pod 'R.swift', '~> 5.4.0'
   pod 'Then', '~> 2.7.0'
   pod 'KeychainSwift', '~> 19.0'
+  pod 'Firebase/Messaging'
 
 end

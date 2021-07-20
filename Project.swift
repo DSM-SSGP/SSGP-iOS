@@ -38,6 +38,7 @@ let project = Project(
         )
     ],
     additionalFiles: [
-        
+        "Supporting Files/R.generated.swift",
+        "Supporting Files/GoogleService-Info.plist"
     ]
 )

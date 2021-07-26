@@ -16,7 +16,11 @@ let project = Project(
             deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
             infoPlist: .file(path: Path("Supporting Files/Info.plist")),
             sources: ["Sources/**"],
-            resources: ["Resources/**", "Supporting Files/**"],
+            resources: [
+                "Resources/**",
+                "Supporting Files/R.generated.swift",
+                "Supporting Files/GoogleService-Info.plist"
+            ],
             actions: [
                 TargetAction.pre(
                     script: "${PODS_ROOT}/SwiftLint/swiftlint",

@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootViewController = TabBarController()
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
+        window?.backgroundColor = R.color.background()
 
         FirebaseApp.configure()
 

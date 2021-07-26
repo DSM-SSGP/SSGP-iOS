@@ -105,10 +105,36 @@ struct R: Rswift.Validatable {
   }
   #endif
 
-  /// This `R.color` struct is generated, and contains static references to 1 colors.
+  /// This `R.color` struct is generated, and contains static references to 14 colors.
   struct color {
     /// Color `AccentColor`.
     static let accentColor = Rswift.ColorResource(bundle: R.hostingBundle, name: "AccentColor")
+    /// Color `Background`.
+    static let background = Rswift.ColorResource(bundle: R.hostingBundle, name: "Background")
+    /// Color `DropDownStroke`.
+    static let dropDownStroke = Rswift.ColorResource(bundle: R.hostingBundle, name: "DropDownStroke")
+    /// Color `Fire`.
+    static let fire = Rswift.ColorResource(bundle: R.hostingBundle, name: "Fire")
+    /// Color `Login`.
+    static let login = Rswift.ColorResource(bundle: R.hostingBundle, name: "Login")
+    /// Color `LowestPrice`.
+    static let lowestPrice = Rswift.ColorResource(bundle: R.hostingBundle, name: "LowestPrice")
+    /// Color `MyPageMenu`.
+    static let myPageMenu = Rswift.ColorResource(bundle: R.hostingBundle, name: "MyPageMenu")
+    /// Color `MyPageSection`.
+    static let myPageSection = Rswift.ColorResource(bundle: R.hostingBundle, name: "MyPageSection")
+    /// Color `MyPage`.
+    static let myPage = Rswift.ColorResource(bundle: R.hostingBundle, name: "MyPage")
+    /// Color `NotSelectedIcon`.
+    static let notSelectedIcon = Rswift.ColorResource(bundle: R.hostingBundle, name: "NotSelectedIcon")
+    /// Color `NoticeTitle`.
+    static let noticeTitle = Rswift.ColorResource(bundle: R.hostingBundle, name: "NoticeTitle")
+    /// Color `SmallTitle`.
+    static let smallTitle = Rswift.ColorResource(bundle: R.hostingBundle, name: "SmallTitle")
+    /// Color `TabbarIcon`.
+    static let tabbarIcon = Rswift.ColorResource(bundle: R.hostingBundle, name: "TabbarIcon")
+    /// Color `Unidentified`.
+    static let unidentified = Rswift.ColorResource(bundle: R.hostingBundle, name: "Unidentified")
 
     #if os(iOS) || os(tvOS)
     /// `UIColor(named: "AccentColor", bundle: ..., traitCollection: ...)`
@@ -119,11 +145,292 @@ struct R: Rswift.Validatable {
     }
     #endif
 
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "Background", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func background(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.background, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "DropDownStroke", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func dropDownStroke(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.dropDownStroke, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "Fire", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func fire(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.fire, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "Login", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func login(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.login, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "LowestPrice", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func lowestPrice(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.lowestPrice, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "MyPage", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func myPage(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.myPage, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "MyPageMenu", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func myPageMenu(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.myPageMenu, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "MyPageSection", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func myPageSection(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.myPageSection, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "NotSelectedIcon", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func notSelectedIcon(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.notSelectedIcon, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "NoticeTitle", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func noticeTitle(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.noticeTitle, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "SmallTitle", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func smallTitle(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.smallTitle, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "TabbarIcon", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func tabbarIcon(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.tabbarIcon, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIColor(named: "Unidentified", bundle: ..., traitCollection: ...)`
+    @available(tvOS 11.0, *)
+    @available(iOS 11.0, *)
+    static func unidentified(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIColor? {
+      return UIKit.UIColor(resource: R.color.unidentified, compatibleWith: traitCollection)
+    }
+    #endif
+
     #if os(watchOS)
     /// `UIColor(named: "AccentColor", bundle: ..., traitCollection: ...)`
     @available(watchOSApplicationExtension 4.0, *)
     static func accentColor(_: Void = ()) -> UIKit.UIColor? {
       return UIKit.UIColor(named: R.color.accentColor.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "Background", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func background(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.background.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "DropDownStroke", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func dropDownStroke(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.dropDownStroke.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "Fire", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func fire(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.fire.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "Login", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func login(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.login.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "LowestPrice", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func lowestPrice(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.lowestPrice.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "MyPage", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func myPage(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.myPage.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "MyPageMenu", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func myPageMenu(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.myPageMenu.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "MyPageSection", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func myPageSection(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.myPageSection.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "NotSelectedIcon", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func notSelectedIcon(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.notSelectedIcon.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "NoticeTitle", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func noticeTitle(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.noticeTitle.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "SmallTitle", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func smallTitle(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.smallTitle.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "TabbarIcon", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func tabbarIcon(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.tabbarIcon.name)
+    }
+    #endif
+
+    #if os(watchOS)
+    /// `UIColor(named: "Unidentified", bundle: ..., traitCollection: ...)`
+    @available(watchOSApplicationExtension 4.0, *)
+    static func unidentified(_: Void = ()) -> UIKit.UIColor? {
+      return UIKit.UIColor(named: R.color.unidentified.name)
+    }
+    #endif
+
+    fileprivate init() {}
+  }
+
+  /// This `R.image` struct is generated, and contains static references to 6 images.
+  struct image {
+    /// Image `7ELEVEN`.
+    static let eleveN = Rswift.ImageResource(bundle: R.hostingBundle, name: "7ELEVEN")
+    /// Image `CU`.
+    static let cU = Rswift.ImageResource(bundle: R.hostingBundle, name: "CU")
+    /// Image `EMART24`.
+    static let emart24 = Rswift.ImageResource(bundle: R.hostingBundle, name: "EMART24")
+    /// Image `GS25`.
+    static let gs25 = Rswift.ImageResource(bundle: R.hostingBundle, name: "GS25")
+    /// Image `MINISTOP`.
+    static let ministoP = Rswift.ImageResource(bundle: R.hostingBundle, name: "MINISTOP")
+    /// Image `TabBarMapIcon`.
+    static let tabBarMapIcon = Rswift.ImageResource(bundle: R.hostingBundle, name: "TabBarMapIcon")
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "7ELEVEN", bundle: ..., traitCollection: ...)`
+    static func eleveN(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.eleveN, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "CU", bundle: ..., traitCollection: ...)`
+    static func cU(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.cU, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "EMART24", bundle: ..., traitCollection: ...)`
+    static func emart24(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.emart24, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "GS25", bundle: ..., traitCollection: ...)`
+    static func gs25(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.gs25, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "MINISTOP", bundle: ..., traitCollection: ...)`
+    static func ministoP(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.ministoP, compatibleWith: traitCollection)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIImage(named: "TabBarMapIcon", bundle: ..., traitCollection: ...)`
+    static func tabBarMapIcon(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
+      return UIKit.UIImage(resource: R.image.tabBarMapIcon, compatibleWith: traitCollection)
     }
     #endif
 

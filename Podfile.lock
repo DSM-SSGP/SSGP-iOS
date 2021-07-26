@@ -1,7 +1,6 @@
 PODS:
   - Alamofire (5.4.3)
   - Differentiator (4.0.1)
-  - DropDown (2.3.13)
   - Firebase/CoreOnly (8.3.0):
     - FirebaseCore (= 8.3.0)
   - Firebase/Messaging (8.3.0):
@@ -85,7 +84,6 @@ PODS:
   - Then (2.7.0)
 
 DEPENDENCIES:
-  - DropDown
   - Firebase/Messaging
   - FloatingPanel (~> 2.4.0)
   - KeychainSwift (~> 19.0)
@@ -105,7 +103,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Differentiator
-    - DropDown
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -135,7 +132,6 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
-  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   Firebase: 817b9171d0d51dccc458b94a5e8edff6b1dd323d
   FirebaseCore: a6dba751680d7033b9d3831e1cfc95ead0605118
   FirebaseCoreDiagnostics: 7e873baabcfaa9512f538554ae4fa0817aaafbdb
@@ -162,6 +158,6 @@ SPEC CHECKSUMS:
   Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: cdf1baaae5def7c0e06270c5a2bfb803af3357e5
+PODFILE CHECKSUM: a33a5d2e779e605384665ca9c416203653553b5e
 
 COCOAPODS: 1.10.1

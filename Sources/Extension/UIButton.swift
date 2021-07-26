@@ -12,12 +12,14 @@ import DropDown
 
 extension UIButton {
     
-    
     func sortList(button: UIButton) {
         
         let dropDown = DropDown()
         
-        dropDown.backgroundColor = UIColor.init(named: <#T##String#>)
+        dropDown.backgroundColor = UIColor.
+        dropDown.cornerRadius = 3.0
+        dropDown.layer.borderWidth = 0.5
+        dropDown.layer.borderColor = UIColor.init(named: "DropDownStroke") as! CGColor
         
         dropDown.dataSource = ["인기순", "추천", "최저가순"]
         dropDown.show()

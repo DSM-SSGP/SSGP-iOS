@@ -20,6 +20,7 @@ target 'SSGP' do
   pod 'FloatingPanel', '~> 2.4.0'
   pod 'Tabman', '~> 2.11'
   pod 'Nuke', '~> 9.5.0'
+  pod 'lottie-ios', '~> 3.2.3'
 
   #ect
   pod 'SwiftLint', '~> 0.43.0'

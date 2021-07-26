@@ -50,6 +50,7 @@ PODS:
   - GoogleUtilities/UserDefaults (7.5.0):
     - GoogleUtilities/Logger
   - KeychainSwift (19.0.0)
+  - lottie-ios (3.2.3)
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (14.0.0):
@@ -86,6 +87,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - FloatingPanel (~> 2.4.0)
   - KeychainSwift (~> 19.0)
+  - lottie-ios (~> 3.2.3)
   - Moya/RxSwift (~> 14.0)
   - Nuke (~> 9.5.0)
   - R.swift (~> 5.4.0)
@@ -110,6 +112,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - KeychainSwift
+    - lottie-ios
     - Moya
     - nanopb
     - Nuke
@@ -138,6 +141,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
   KeychainSwift: a06190cf933ad46b1e0abc3d77d29c06331715c7
+  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   Nuke: 6f400a4ea957e09149ec335a3c6acdcc814d89e4
@@ -154,6 +158,6 @@ SPEC CHECKSUMS:
   Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: d99ce717938ff2f8100721e9b8a05be73da036f0
+PODFILE CHECKSUM: a33a5d2e779e605384665ca9c416203653553b5e
 
 COCOAPODS: 1.10.1

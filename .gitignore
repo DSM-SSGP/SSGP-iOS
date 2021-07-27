@@ -69,3 +69,6 @@ Pods/
 
 ### Tuist managed dependencies ###
 Tuist/Dependencies
+
+### R.Swift ###
+R.generated.swift

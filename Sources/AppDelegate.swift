@@ -11,6 +11,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
+        let rootViewController = TabBarController()
+        window?.rootViewController = rootViewController
+        window?.makeKeyAndVisible()
+        window?.backgroundColor = R.color.background()
 
         FirebaseApp.configure()
 

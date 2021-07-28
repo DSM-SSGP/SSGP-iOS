@@ -82,6 +82,11 @@ class ProductTableViewCell: UITableViewCell {
         .disposed(by: self.disposeBag)
     }
 
+    public func disposeCell() {
+        self.isLiked.accept(false)
+        self.disposeBag = DisposeBag()
+    }
+
     // MARK: - private method
 
     private func setupSubview() {

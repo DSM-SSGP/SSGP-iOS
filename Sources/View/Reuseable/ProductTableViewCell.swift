@@ -124,20 +124,22 @@ class ProductTableViewCell: UITableViewCell {
     }
 
     private func setStoreList(_ stores: [Store]) {
-        if self.horizontalStackView.arrangedSubviews.count > 1 {
-            self.horizontalStackView.arrangedSubviews[1].removeFromSuperview()
+        if stores.count > 0 {
+            if self.horizontalStackView.arrangedSubviews.count > 1 {
+                self.horizontalStackView.arrangedSubviews[1].removeFromSuperview()
+            }
+            let storeListStackView = UIStackView().then {
+                $0.axis = .horizontal
+                $0.spacing = 2
+            }
+            for store in stores {
+                storeListStackView.addArrangedSubview(UIImageView(image: store.fitImage()).then {
+                    $0.frame.size.height = 18
+                    $0.contentMode = .right
+                })
+            }
+            self.horizontalStackView.addArrangedSubview(storeListStackView)
         }
-        let storeListStackView = UIStackView().then {
-            $0.axis = .horizontal
-            $0.spacing = 2
-        }
-        for store in stores {
-            storeListStackView.addArrangedSubview(UIImageView(image: store.fitImage()).then {
-                $0.frame.size.height = 18
-                $0.contentMode = .right
-            })
-        }
-        self.horizontalStackView.addArrangedSubview(storeListStackView)
     }
 
     private func toggleFireButton() {

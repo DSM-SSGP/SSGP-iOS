@@ -25,7 +25,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     private let mapView = MKMapView().then {
         $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0)
         $0.showsUserLocation = true
-        $0.setUserTrackingMode(.follow, animated: true)
     }
     private let noticeButton = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "bell.fill")
@@ -67,6 +66,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
                 longitudinalMeters: 700
             )
             self?.mapView.setRegion(viewRegion, animated: true)
+            self?.mapView.setUserTrackingMode(.follow, animated: true)
         })
         .disposed(by: disposeBag)
     }

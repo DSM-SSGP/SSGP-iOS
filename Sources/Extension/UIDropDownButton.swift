@@ -41,10 +41,14 @@ class UIDropDownButton: UIButton {
     }
 
     // Public Method
-    public func setAction() {
-        dropDown.selectionAction = { (_: Int, item: String) in
-            self.setTitle("\(item) ▾", for: .normal)
+    public func setAction() -> BehaviorRelay<SortMethod> {
+        let selectionAction = BehaviorRelay<SortMethod>(value: .allCases[0])
+        dropDown.selectionAction = { [weak self] row, item in
+            self?.setTitle("\(item) ▾", for: .normal)
+            self?.dropDown.clearSelection()
+            selectionAction.accept(.allCases[row])
         }
+        return selectionAction
     }
 
     // Private Method

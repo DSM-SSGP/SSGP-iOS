@@ -42,6 +42,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     }
 
     // MARK: - private method
+
+    private func bind() {
+        // demo data
+        setAnnotation(latitudeValue: <#T##CLLocationDegrees#>,
+                      longitudeValue: <#T##CLLocationDegrees#>,
+                      title: <#T##String#>,
+                      subtitle: <#T##String#>)
+    }
+
     private func setupSubview() {
         self.view.addSubview(mapView)
 
@@ -69,6 +78,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             self?.mapView.setUserTrackingMode(.follow, animated: true)
         })
         .disposed(by: disposeBag)
+    }
+
+    private func setAnnotation(latitudeValue: CLLocationDegrees,
+                               longitudeValue: CLLocationDegrees,
+                               delta span: Double = 0.1,
+                               title strTitle: String,
+                               subtitle strSubTitle: String) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2DMake(latitudeValue, longitudeValue)
+        annotation.title = strTitle
+        annotation.subtitle = strSubTitle
+        self.mapView.addAnnotation(annotation)
     }
 
 }

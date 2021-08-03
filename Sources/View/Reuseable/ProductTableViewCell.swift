@@ -123,7 +123,7 @@ class ProductTableViewCell: UITableViewCell {
 
     }
 
-    private func setStoreList(_ stores: [Store]) {
+    private func setStoreList(_ stores: [Brand]) {
         if stores.count > 0 {
             if self.horizontalStackView.arrangedSubviews.count > 1 {
                 self.horizontalStackView.arrangedSubviews[1].removeFromSuperview()

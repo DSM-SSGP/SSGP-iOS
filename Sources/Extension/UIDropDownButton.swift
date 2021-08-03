@@ -18,6 +18,7 @@ class UIDropDownButton: UIButton {
     // Properties
     private let disposeBag = DisposeBag()
     private lazy var dropDown = DropDown().then {
+        $0.anchorView = self
         $0.backgroundColor = R.color.background()
         $0.textFont = UIFont.systemFont(ofSize: 15)
         $0.textColor = R.color.accentColor()!
@@ -26,11 +27,7 @@ class UIDropDownButton: UIButton {
         $0.cornerRadius = 3
         $0.shadowOpacity = 0.3
         $0.dataSource = SortMethod.allCasesStr()
-        $0.selectionAction = { (_: Int, item: String) in
-            self.setTitle("\(item) ▾", for: .normal)
-        }
-        $0.anchorView = self
-        $0.bottomOffset = CGPoint(x: 0, y: ($0.anchorView?.plainView.bounds.height) ?? 00)
+        $0.bottomOffset = CGPoint(x: 0, y: 30)
     }
 
     // Initialization
@@ -43,6 +40,13 @@ class UIDropDownButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // Public Method
+    public func setAction() {
+        dropDown.selectionAction = { (_: Int, item: String) in
+            self.setTitle("\(item) ▾", for: .normal)
+        }
+    }
+
     // Private Method
     private func setDropDownButton() {
         self.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.right
@@ -51,6 +55,7 @@ class UIDropDownButton: UIButton {
         self.setTitleColor(R.color.accentColor(), for: .normal)
         self.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         self.snp.makeConstraints {
+            $0.height.equalTo(30)
             $0.width.equalTo(80)
         }
         self.rx.tap.subscribe(onNext: { [weak self] in

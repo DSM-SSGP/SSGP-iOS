@@ -23,9 +23,10 @@ class UIDropDownButton: UIButton {
         $0.textFont = UIFont.systemFont(ofSize: 15)
         $0.textColor = R.color.accentColor()!
         $0.selectedTextColor = R.color.accentColor()!
-        $0.selectionBackgroundColor = R.color.dropDownStroke()!
+        $0.selectionBackgroundColor = R.color.unidentified()!
+        $0.shadowColor = R.color.shadow()!
         $0.cornerRadius = 3
-        $0.shadowOpacity = 0.3
+        $0.shadowOpacity = 0.5
         $0.dataSource = SortMethod.allCasesStr()
         $0.bottomOffset = CGPoint(x: 0, y: 30)
     }

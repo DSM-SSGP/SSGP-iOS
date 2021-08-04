@@ -21,6 +21,7 @@ target 'SSGP' do
   pod 'Tabman', '~> 2.11'
   pod 'Nuke', '~> 9.5.0'
   pod 'lottie-ios', '~> 3.2.3'
+  pod 'DropDown', '~> 2.3.13'
 
   #ect
   pod 'SwiftLint', '~> 0.43.0'

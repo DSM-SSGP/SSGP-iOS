@@ -85,7 +85,7 @@ PODS:
   - Then (2.7.0)
 
 DEPENDENCIES:
-  - DropDown
+  - DropDown (~> 2.3.13)
   - Firebase/Messaging
   - FloatingPanel (~> 2.4.0)
   - KeychainSwift (~> 19.0)
@@ -162,6 +162,6 @@ SPEC CHECKSUMS:
   Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: cdf1baaae5def7c0e06270c5a2bfb803af3357e5
+PODFILE CHECKSUM: ad30fd70c526919d902a00f4f46026559aa98b41
 
 COCOAPODS: 1.10.1

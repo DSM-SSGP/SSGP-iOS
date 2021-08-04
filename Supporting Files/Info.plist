@@ -4,6 +4,8 @@
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>주변 편의점을 찾기 위해 현제 위치가 필요합니다!</string>
+	<key>CFBundleDisplayName</key>
+	<string>싸가편</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

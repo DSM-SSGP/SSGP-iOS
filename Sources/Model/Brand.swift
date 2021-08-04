@@ -1,5 +1,5 @@
 //
-//  Store.swift
+//  Brand.swift
 //  SSGP
 //
 //  Created by 김수완 on 2021/07/28.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// 편의점 종류
-enum Store {
+enum Brand {
     case gs25
     case cu
     case ministop
@@ -17,7 +17,7 @@ enum Store {
     case emart24
 }
 
-extension Store {
+extension Brand {
     func fitImage() -> UIImage {
         switch self {
         case .gs25:

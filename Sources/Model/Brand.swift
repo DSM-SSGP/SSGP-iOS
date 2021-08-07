@@ -33,6 +33,21 @@ extension Brand {
         }
     }
 
+    func fitAnnotaionImage() -> UIImage {
+        switch self {
+        case .gs25:
+            return R.image.gs25ANT()!
+        case .cu:
+            return R.image.cuANT()!
+        case .ministop:
+            return R.image.ministopANT()!
+        case .sevenEleven:
+            return R.image.sevenelevenANT()!
+        case .emart24:
+            return R.image.emart24ANT()!
+        }
+    }
+
     func fitColor() -> UIColor {
         switch self {
         case .gs25:

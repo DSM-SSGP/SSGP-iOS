@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import Lottie
 
 class LoginViewController: UIViewController {
     // MARK: - Properties
@@ -33,6 +34,17 @@ class LoginViewController: UIViewController {
         )
         $0.attributedText = attributedStr
     }
+    private let imageView = UIImageView().then {
+        $0.image = R.image.loginPageImage()
+    }
+    private let pulseAnimationView = AnimationView(name: "pulse").then {
+        $0.loopMode = .loop
+        $0.animationSpeed = 0.75
+        $0.play()
+    }
+    private let iconImageView = UIImageView().then {
+        $0.image = R.image.storeIcon()
+    }
 
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -45,10 +57,31 @@ class LoginViewController: UIViewController {
     // MARK: - private method
     private func setupSubview() {
         self.view.addSubview(welcomeLabel)
+        self.view.addSubview(imageView)
+        self.imageView.addSubview(pulseAnimationView)
+        self.pulseAnimationView.addSubview(iconImageView)
 
         welcomeLabel.snp.makeConstraints {
             $0.left.equalToSuperview().offset(30)
             $0.top.equalToSuperview().offset(90)
+        }
+        imageView.snp.makeConstraints {
+            $0.top.equalTo(welcomeLabel.snp.bottom).offset(25)
+            $0.left.equalToSuperview().offset(30)
+            $0.right.equalToSuperview().offset(-30)
+            $0.bottom.equalToSuperview().offset(-150)
+        }
+        pulseAnimationView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.left.equalToSuperview().offset(25)
+            $0.right.equalToSuperview().offset(-25)
+            $0.height.equalTo(self.pulseAnimationView.snp.width)
+        }
+        iconImageView.snp.makeConstraints {
+            // $0.center.equalToSuperview()
+            $0.top.equalToSuperview().offset(80)
+            $0.left.equalToSuperview().offset(50)
+            $0.right.equalToSuperview().offset(-50)
         }
     }
 

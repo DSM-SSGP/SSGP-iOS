@@ -11,6 +11,7 @@ import SnapKit
 import Then
 import RxSwift
 import Lottie
+import AuthenticationServices
 
 class LoginViewController: UIViewController {
     // MARK: - Properties
@@ -18,7 +19,7 @@ class LoginViewController: UIViewController {
 
     private let welcomeLabel = UILabel().then {
         $0.text = "애플 아이디로\n싸가편을 시작하세요!"
-        $0.font = UIFont.systemFont(ofSize: 25)
+        $0.font = UIFont.systemFont(ofSize: 30)
         $0.numberOfLines = 0
         // 부분 text custom
         let attributedStr = NSMutableAttributedString(string: $0.text!)
@@ -29,7 +30,7 @@ class LoginViewController: UIViewController {
         )
         attributedStr.addAttribute(
             .font,
-            value: UIFont.boldSystemFont(ofSize: 25),
+            value: UIFont.boldSystemFont(ofSize: 30),
             range: ($0.text! as NSString).range(of: "싸가편")
         )
         $0.attributedText = attributedStr
@@ -44,7 +45,9 @@ class LoginViewController: UIViewController {
     }
     private let iconImageView = UIImageView().then {
         $0.image = R.image.storeIcon()
+        $0.contentMode = .scaleAspectFit
     }
+    private let loginButton = ASAuthorizationAppleIDButton(type: .continue, style: .whiteOutline)
 
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -54,22 +57,29 @@ class LoginViewController: UIViewController {
         bind()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        print("!")
+        pulseAnimationView.play()
+    }
+
     // MARK: - private method
     private func setupSubview() {
         self.view.addSubview(welcomeLabel)
         self.view.addSubview(imageView)
         self.imageView.addSubview(pulseAnimationView)
         self.pulseAnimationView.addSubview(iconImageView)
+        self.view.addSubview(loginButton)
 
         welcomeLabel.snp.makeConstraints {
+            $0.height.equalTo(80)
             $0.left.equalToSuperview().offset(30)
-            $0.top.equalToSuperview().offset(90)
+            $0.top.equalToSuperview().offset(100)
         }
         imageView.snp.makeConstraints {
             $0.top.equalTo(welcomeLabel.snp.bottom).offset(25)
             $0.left.equalToSuperview().offset(30)
             $0.right.equalToSuperview().offset(-30)
-            $0.bottom.equalToSuperview().offset(-150)
+            $0.bottom.equalTo(self.loginButton.snp.top).offset(-30)
         }
         pulseAnimationView.snp.makeConstraints {
             $0.center.equalToSuperview()
@@ -78,10 +88,15 @@ class LoginViewController: UIViewController {
             $0.height.equalTo(self.pulseAnimationView.snp.width)
         }
         iconImageView.snp.makeConstraints {
-            // $0.center.equalToSuperview()
-            $0.top.equalToSuperview().offset(80)
+            $0.centerY.equalToSuperview().offset(25)
             $0.left.equalToSuperview().offset(50)
             $0.right.equalToSuperview().offset(-50)
+        }
+        loginButton.snp.makeConstraints {
+            $0.height.equalTo(60)
+            $0.left.equalToSuperview().offset(30)
+            $0.right.equalToSuperview().offset(-30)
+            $0.bottom.equalToSuperview().offset(-50)
         }
     }
 

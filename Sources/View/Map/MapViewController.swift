@@ -18,10 +18,10 @@ class MapViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     private var isTrackingMode = true
-    private var isMovingToMyLocation = false
 
     private lazy var locationManager = CLLocationManager().then {
         $0.delegate = self
+        $0.startUpdatingLocation()
         $0.desiredAccuracy = kCLLocationAccuracyBest
         $0.requestWhenInUseAuthorization()
     }
@@ -150,7 +150,6 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     private func moveMyLocation(animated: Bool) {
         isTrackingMode = true
-        isMovingToMyLocation = true
         locationManager.userLocation().subscribe(onSuccess: { [weak self] in
             let viewRegion = MKCoordinateRegion(
                 center: $0,
@@ -158,7 +157,6 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
                 longitudinalMeters: 800
             )
             self?.mapView.setRegion(viewRegion, animated: animated)
-            self?.locationManager.startUpdatingLocation()
         })
         .disposed(by: disposeBag)
     }
@@ -182,6 +180,10 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
 
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+        isTrackingMode = true
+    }
+
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if view.annotation is MKUserLocation {
             mapView.deselectAnnotation(view.annotation, animated: false)
@@ -192,9 +194,7 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
 
     // mapView가 drag 될때
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        if isMovingToMyLocation {
-            isMovingToMyLocation = false
-        } else if animated {
+        if !animated {
             isTrackingMode = false
         }
     }

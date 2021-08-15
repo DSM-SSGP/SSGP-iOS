@@ -59,71 +59,43 @@ class MapViewController: UIViewController {
         setAnnotation(
             annotation: StoreAnnotation(
                 identifier: 1,
-                title: "이마트24 순천신대에듀점",
+                title: "CU 대덕대정곡관점",
                 locationName: nil,
                 discipline: nil,
                 calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
                 saleInfo: "1 + 1",
-                brand: .emart24,
+                brand: .cu,
                 coordinate: CLLocationCoordinate2D(
-                    latitude: 34.939765,
-                    longitude: 127.547760)
+                    latitude: 36.390328,
+                    longitude: 127.363910)
             )
         )
         setAnnotation(
             annotation: StoreAnnotation(
                 identifier: 2,
-                title: "CU 에듀힐스점",
+                title: "CU 대덕대생활관점",
                 locationName: nil,
                 discipline: nil,
                 calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
                 saleInfo: "2 + 1",
                 brand: .cu,
                 coordinate: CLLocationCoordinate2D(
-                    latitude: 34.939043,
-                    longitude: 127.545247)
+                    latitude: 36.389698,
+                    longitude: 127.367955)
             )
         )
         setAnnotation(
             annotation: StoreAnnotation(
                 identifier: 3,
-                title: "GS25 순천신대점",
-                locationName: nil,
-                discipline: nil,
-                calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
-                saleInfo: "1 + 1",
-                brand: .gs25,
-                coordinate: CLLocationCoordinate2D(
-                    latitude: 34.939772,
-                    longitude: 127.548598)
-            )
-        )
-        setAnnotation(
-            annotation: StoreAnnotation(
-                identifier: 3,
-                title: "CU 순천신대중앙점",
+                title: "CU 대덕대카페테리아점",
                 locationName: nil,
                 discipline: nil,
                 calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
                 saleInfo: "1 + 1",
                 brand: .cu,
                 coordinate: CLLocationCoordinate2D(
-                    latitude: 34.933748,
-                    longitude: 127.549066)
-            )
-        )
-        setAnnotation(
-            annotation: StoreAnnotation(
-                identifier: 3,
-                title: "GS25 신대메가타운점",
-                locationName: nil,
-                discipline: nil,
-                calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
-                saleInfo: "1 + 1",
-                brand: .gs25,
-                coordinate: CLLocationCoordinate2D(
-                    latitude: 34.935942,
-                    longitude: 127.545467)
+                    latitude: 36.390816,
+                    longitude: 127.367692)
             )
         )
     }

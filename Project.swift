@@ -1,8 +1,6 @@
 import ProjectDescription
 
-
 // MARK: - Project
-
 // Creates our project using a helper function defined in ProjectDescriptionHelpers
 let project = Project(
     name: "SSGP",
@@ -21,6 +19,7 @@ let project = Project(
                 "Supporting Files/R.generated.swift",
                 "Supporting Files/GoogleService-Info.plist"
             ],
+            entitlements: Path("Supporting Files/SSGP.entitlements"),
             actions: [
                 TargetAction.pre(
                     script: "${PODS_ROOT}/SwiftLint/swiftlint",

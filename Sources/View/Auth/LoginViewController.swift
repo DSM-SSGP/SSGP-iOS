@@ -41,6 +41,7 @@ class LoginViewController: UIViewController {
     private let pulseAnimationView = AnimationView(name: "pulse").then {
         $0.loopMode = .loop
         $0.animationSpeed = 0.75
+        $0.backgroundBehavior = .pauseAndRestore
         $0.play()
     }
     private let iconImageView = UIImageView().then {
@@ -55,11 +56,6 @@ class LoginViewController: UIViewController {
 
         setupSubview()
         bind()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        print("!")
-        pulseAnimationView.play()
     }
 
     // MARK: - private method

@@ -32,4 +32,34 @@ extension Brand {
             return R.image.emart24()!
         }
     }
+
+    func fitAnnotaionImage() -> UIImage {
+        switch self {
+        case .gs25:
+            return R.image.gs25ANT()!
+        case .cu:
+            return R.image.cuANT()!
+        case .ministop:
+            return R.image.ministopANT()!
+        case .sevenEleven:
+            return R.image.sevenelevenANT()!
+        case .emart24:
+            return R.image.emart24ANT()!
+        }
+    }
+
+    func fitColor() -> UIColor {
+        switch self {
+        case .gs25:
+            return #colorLiteral(red: 0.1567118764, green: 0.6941494942, blue: 0.811663568, alpha: 1)
+        case .cu:
+            return #colorLiteral(red: 0.4588235294, green: 0.07065688819, blue: 0.5254271626, alpha: 1)
+        case .ministop:
+            return #colorLiteral(red: 0.1176881716, green: 0.05100970715, blue: 0.5058218837, alpha: 1)
+        case .sevenEleven:
+            return #colorLiteral(red: 0, green: 0.4431563616, blue: 0.3019121885, alpha: 1)
+        case .emart24:
+            return #colorLiteral(red: 0.9999296069, green: 0.7176957726, blue: 0.1057628766, alpha: 1)
+        }
+    }
 }

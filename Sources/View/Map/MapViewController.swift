@@ -18,6 +18,7 @@ class MapViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     private var isTrackingMode = true
+    private var isMapFirstLoad = true
 
     private lazy var locationManager = CLLocationManager().then {
         $0.delegate = self
@@ -153,7 +154,10 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        isTrackingMode = true
+        if isMapFirstLoad {
+            isTrackingMode = true
+            isMapFirstLoad = false
+        }
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {

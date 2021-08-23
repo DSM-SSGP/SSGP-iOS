@@ -6,8 +6,12 @@
 //  Copyright © 2021 com.ssgp. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-extension ViewModel {
-    
+extension UIViewController {
+    func navigateToNotificationViewController() {
+        let viewController = NotificationViewController()
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
 }

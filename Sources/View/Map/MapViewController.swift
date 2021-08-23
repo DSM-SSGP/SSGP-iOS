@@ -37,9 +37,13 @@ class MapViewController: UIViewController {
             forAnnotationViewWithReuseIdentifier: "MKMapViewDefaultAnnotationViewReuseIdentifier"
         )
     }
-    private let noticeButton = UIBarButtonItem().then {
+    private lazy var noticeButton = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "bell.fill")
         $0.tintColor = R.color.notSelectedIcon()
+        $0.rx.tap.subscribe(onNext: { [weak self] in
+            self?.navigateToNotificationViewController()
+        })
+        .disposed(by: self.disposeBag)
     }
 
     // MARK: - Life cycle
@@ -50,7 +54,10 @@ class MapViewController: UIViewController {
         setupSubview()
         moveMyLocation(animated: false)
         bind()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        setNavigationBar()
     }
 
     // MARK: - private method
@@ -111,6 +118,7 @@ class MapViewController: UIViewController {
     }
 
     private func setNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()

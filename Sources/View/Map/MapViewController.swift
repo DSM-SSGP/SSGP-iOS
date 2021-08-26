@@ -11,10 +11,10 @@ import MapKit
 import CoreLocation
 import RxSwift
 import RxCocoa
+import FloatingPanel
 
 class MapViewController: UIViewController {
 
-    // MARK: - Properties
     private let disposeBag = DisposeBag()
 
     private var isTrackingMode = true
@@ -45,6 +45,11 @@ class MapViewController: UIViewController {
         })
         .disposed(by: self.disposeBag)
     }
+    let floatingPanelController = FloatingPanelController().then {
+        $0.surfaceView.appearance.backgroundColor = R.color.background()?.withAlphaComponent(0.9)
+        $0.surfaceView.appearance.cornerRadius = 8.0
+        $0.layout = StoreDetailFloatingPanelLayout()
+    }
 
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -54,6 +59,7 @@ class MapViewController: UIViewController {
         setupSubview()
         moveMyLocation(animated: false)
         bind()
+        setFloatingPanel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -173,6 +179,9 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
             mapView.deselectAnnotation(view.annotation, animated: false)
             moveMyLocation(animated: true)
             selectNearestAnnotataion()
+        } else if let storeAnnotataion = view.annotation as? StoreAnnotation {
+            hideFloatingPanel()
+            showFloatingPanel(selectedAnnotation: storeAnnotataion)
         }
     }
 
@@ -191,4 +200,23 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
 
+}
+
+// MARK: - FloatingPanel
+extension MapViewController: FloatingPanelControllerDelegate {
+    private func setFloatingPanel() {
+        let contentViewcontroller = StoreDetailFloatingPanelController()
+        floatingPanelController.delegate = self
+        floatingPanelController.set(contentViewController: contentViewcontroller)
+        floatingPanelController.addPanel(toParent: self)
+    }
+
+    private func showFloatingPanel(selectedAnnotation: StoreAnnotation) {
+        // 플로팅 판넬 데이터 바인딩
+        floatingPanelController.move(to: .half, animated: true)
+    }
+
+    private func hideFloatingPanel() {
+        floatingPanelController.move(to: .hidden, animated: true)
+    }
 }

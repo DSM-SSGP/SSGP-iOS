@@ -14,14 +14,50 @@ import FloatingPanel
 class StoreDetailFloatingPanelController: UIViewController {
 
     // MARK: - Properties
+    private let storeBrandImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFit
+    }
+    private let nameLabel = UILabel().then {
+        $0.font = .boldSystemFont(ofSize: 20)
+    }
+    private let addressLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 10)
+    }
+
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupSubview()
+    }
+
+    // MARK: - Public Method
+    public func bind() {
+        // // demo data
+        storeBrandImageView.image = R.image.cU()
+        nameLabel.text = "대덕대 편의점"
+        addressLabel.text = "대전광역시 유성구 장동 가정북로 68"
     }
 
     // MARK: - Private Method
     private func setupSubview() {
+        self.view.addSubview(storeBrandImageView)
+        self.view.addSubview(nameLabel)
+        self.view.addSubview(addressLabel)
+
+        storeBrandImageView.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(14)
+            $0.centerY.equalTo(self.view.snp.top).offset(75)
+            $0.width.height.equalTo(80)
+        }
+        nameLabel.snp.makeConstraints {
+            $0.left.equalTo(storeBrandImageView.snp.right).offset(15)
+            $0.bottom.equalTo(storeBrandImageView.snp.centerY)
+        }
+        addressLabel.snp.makeConstraints {
+            $0.left.equalTo(storeBrandImageView.snp.right).offset(15)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(3)
+        }
     }
 
 }

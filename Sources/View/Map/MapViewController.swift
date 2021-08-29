@@ -213,6 +213,9 @@ extension MapViewController: FloatingPanelControllerDelegate {
 
     private func showFloatingPanel(selectedAnnotation: StoreAnnotation) {
         // 플로팅 판넬 데이터 바인딩
+        if let ftp = floatingPanelController.contentViewController as? StoreDetailFloatingPanelController {
+            ftp.bind()
+        }
         floatingPanelController.move(to: .half, animated: true)
     }
 

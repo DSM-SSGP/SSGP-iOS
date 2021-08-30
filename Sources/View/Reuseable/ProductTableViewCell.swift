@@ -26,7 +26,7 @@ class ProductTableViewCell: UITableViewCell {
         $0.textAlignment = .right
     }
     private let lowestPriceTextLabel = UILabel().then {
-        $0.text = "최저가"
+        $0.text = "원가"
         $0.font = UIFont.boldSystemFont(ofSize: 10)
         $0.textColor = R.color.lowestPrice()
     }

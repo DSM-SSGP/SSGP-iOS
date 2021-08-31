@@ -12,5 +12,28 @@ protocol ViewModel: AnyObject {
     associatedtype Input
     associatedtype Output
 
-    func transform(input: Input) -> Output
+    func transform(_ input: Input) -> Output
 }
+
+
+/*
+ 
+ 기본적인 ViewModel의 틀입니다.
+ 
+ import RxSwift
+
+ class SomeViewModel: ViewModel {
+     private let disposeBag = DisposeBag()
+
+     struct Input {
+     }
+
+     struct Output {
+     }
+
+     func transform(_ input: Input) -> Output {
+        return Output()
+     }
+ }
+ 
+ */

@@ -15,6 +15,7 @@ import FloatingPanel
 
 class MapViewController: UIViewController {
 
+    private let viewModel = MapViewModel()
     private let disposeBag = DisposeBag()
 
     private var isTrackingMode = true

@@ -15,6 +15,7 @@ import AuthenticationServices
 
 class LoginViewController: UIViewController {
     // MARK: - Properties
+    private let viewModel = LoginViewModel()
     let disposeBag = DisposeBag()
 
     private let welcomeLabel = UILabel().then {

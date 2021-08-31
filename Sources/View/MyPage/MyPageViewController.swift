@@ -10,6 +10,8 @@ import UIKit
 
 class MyPageViewController: UIViewController {
 
+    private let viewModel = MyPageViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

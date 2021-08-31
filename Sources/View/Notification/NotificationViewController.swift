@@ -15,6 +15,7 @@ import RxCocoa
 class NotificationViewController: UIViewController {
 
     // MARK: - Properties
+    private let viewModel = NotificationViewModel()
     let disposeBag = DisposeBag()
 
     lazy private var notificationTableView = UITableView().then {

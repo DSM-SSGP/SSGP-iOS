@@ -14,4 +14,12 @@ extension UIViewController {
         viewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(viewController, animated: true)
     }
+
+    func goLoginViewController() {
+        let viewController = LoginViewController().then {
+            $0.view.backgroundColor = R.color.background()
+            $0.modalPresentationStyle = .fullScreen
+        }
+        self.present(viewController, animated: true, completion: nil)
+    }
 }

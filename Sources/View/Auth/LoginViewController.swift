@@ -10,13 +10,16 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import RxCocoa
 import Lottie
 import AuthenticationServices
 
 class LoginViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = LoginViewModel()
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+
+    private let appleIdLinked = PublishSubject<ASAuthorizationAppleIDCredential>()
 
     private let welcomeLabel = UILabel().then {
         $0.text = "애플 아이디로\n싸가편을 시작하세요!"
@@ -60,6 +63,20 @@ class LoginViewController: UIViewController {
     }
 
     // MARK: - private method
+    private func bind() {
+        let input = LoginViewModel.Input(
+            appleIdLinked: appleIdLinked
+        )
+        let _ = viewModel.transform(input)
+
+        loginButton.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.appleSignInButtonPress()
+            })
+            .disposed(by: disposeBag)
+    }
+
     private func setupSubview() {
         self.view.addSubview(welcomeLabel)
         self.view.addSubview(imageView)
@@ -96,7 +113,40 @@ class LoginViewController: UIViewController {
             $0.bottom.equalToSuperview().offset(-50)
         }
     }
+}
 
-    private func bind() {
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate {
+
+    func appleSignInButtonPress() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+
+    // Apple ID 연동 성공 시
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            appleIdLinked.onNext(appleIDCredential)
+        default:
+            break
+        }
+    }
+
+    // Apple ID 연동 실패 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle error.
+    }
+
 }

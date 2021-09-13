@@ -24,39 +24,42 @@ class MyPageMenuTableViewCell: UITableViewCell {
         $0.contentMode = .scaleAspectFit
         $0.tintColor = R.color.myPageMenu()
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = R.color.myPage()
         setupSubview()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        if selected {
+            self.setSelected(false, animated: true)
+        }
     }
-    
+
     private func setupSubview() {
         self.addSubview(self.contentView)
         self.contentView.addSubview(menuImageView)
         self.contentView.addSubview(menuLabel)
         self.contentView.addSubview(selectButton)
-        
+
         menuImageView.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(16)
             $0.bottom.equalTo(contentView).offset(-16)
             $0.left.equalTo(contentView).offset(16)
             $0.width.equalTo(menuImageView.snp.height)
         }
-        
+
         menuLabel.snp.makeConstraints {
             $0.left.equalTo(menuImageView).offset(30)
             $0.centerY.equalTo(contentView)
         }
-        
+
         selectButton.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(16)
             $0.bottom.equalTo(contentView).offset(-16)

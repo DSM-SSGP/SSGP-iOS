@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 class MyPageViewController: UIViewController {
-
+    
     private lazy var profileImageView = UIImageView().then {
         $0.image = R.image.profileImage()
     }
-
+    
     private lazy var nameLabel = UILabel().then {
         $0.font = .boldSystemFont(ofSize: 40)
         $0.text = "이름"
@@ -21,8 +23,8 @@ class MyPageViewController: UIViewController {
 
     private lazy var menuTableView = UITableView().then {
         $0.backgroundColor = R.color.myPage()
-        $0.sectionIndexColor = .black
         $0.separatorStyle = .none
+        $0.register(MyPageMenuTableViewCell.self, forCellReuseIdentifier: "myPageCell")
     }
 
     override func viewDidLoad() {
@@ -32,8 +34,6 @@ class MyPageViewController: UIViewController {
         view.backgroundColor = R.color.myPage()
         setupSubview()
         setNavigationBar()
-        setupTableView()
-        print(view.bounds)
     }
 
     private func setupSubview() {
@@ -65,10 +65,6 @@ class MyPageViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
-    }
-    
-    private func setupTableView() {
-        menuTableView.register(MyPageMenuTableViewCell.self, forCellReuseIdentifier: "myPageCell")
     }
 }
 
@@ -102,7 +98,6 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "myPageCell", for: indexPath)
                 as? MyPageMenuTableViewCell else { return UITableViewCell() }
-        cell.selectionStyle = .none
 
         switch indexPath {
         case [0, 0]:
@@ -118,9 +113,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             cell.menuImageView.tintColor = R.color.myPageMenu()
             cell.menuLabel.text = "로그아웃"
         default:
-            print("asdf")
+            break
         }
-
         return cell
     }
 }

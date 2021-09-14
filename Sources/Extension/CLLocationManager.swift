@@ -12,14 +12,10 @@ import RxSwift
 extension CLLocationManager {
     func userLocation() -> Single<CLLocationCoordinate2D> {
         return Single.create { single in
-            DispatchQueue.global().async {
-                while true {
-                    if let userLocation = self.location?.coordinate {
-                        DispatchQueue.main.async {
-                            single(.success(userLocation))
-                        }
-                        break
-                    }
+            while true {
+                if let userLocation = self.location?.coordinate {
+                    single(.success(userLocation))
+                    break
                 }
             }
             return Disposables.create()

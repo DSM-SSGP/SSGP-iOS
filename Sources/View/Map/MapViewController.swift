@@ -15,10 +15,14 @@ import FloatingPanel
 
 class MapViewController: UIViewController {
 
+    private let viewModel = MapViewModel()
     private let disposeBag = DisposeBag()
 
-    private var isTrackingMode = true
-    private var isMapFirstLoad = true
+    private let mapViewDidFinishLoadingMap = PublishSubject<Void>()
+    private let annotaationIsSelected = PublishSubject<MKAnnotationView?>()
+    private let annotaationIsDeselected = PublishSubject<Void>()
+    private let userDraggedMapView = PublishSubject<Void>()
+    private let userMoved = PublishSubject<Void>()
 
     private lazy var locationManager = CLLocationManager().then {
         $0.delegate = self
@@ -69,49 +73,45 @@ class MapViewController: UIViewController {
     // MARK: - private method
 
     private func bind() {
-        // demo data
-        setAnnotation(
-            annotation: StoreAnnotation(
-                identifier: 1,
-                title: "CU 대덕대정곡관점",
-                locationName: nil,
-                discipline: nil,
-                calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
-                saleInfo: "1 + 1",
-                brand: .cu,
-                coordinate: CLLocationCoordinate2D(
-                    latitude: 36.390328,
-                    longitude: 127.363910)
-            )
+        let input = MapViewModel.Input(
+            mapViewDidFinishLoadingMap: mapViewDidFinishLoadingMap.asDriver(onErrorJustReturn: ()),
+            annotaationIsSelected: annotaationIsSelected.asDriver(onErrorJustReturn: nil),
+            annotaationIsDeselected: annotaationIsDeselected.asDriver(onErrorJustReturn: ()),
+            userDraggedMapView: userDraggedMapView.asDriver(onErrorJustReturn: ()),
+            userMoved: userMoved.asDriver(onErrorJustReturn: ())
         )
-        setAnnotation(
-            annotation: StoreAnnotation(
-                identifier: 2,
-                title: "CU 대덕대생활관점",
-                locationName: nil,
-                discipline: nil,
-                calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
-                saleInfo: "2 + 1",
-                brand: .cu,
-                coordinate: CLLocationCoordinate2D(
-                    latitude: 36.389698,
-                    longitude: 127.367955)
-            )
-        )
-        setAnnotation(
-            annotation: StoreAnnotation(
-                identifier: 3,
-                title: "CU 대덕대카페테리아점",
-                locationName: nil,
-                discipline: nil,
-                calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
-                saleInfo: "1 + 1",
-                brand: .cu,
-                coordinate: CLLocationCoordinate2D(
-                    latitude: 36.390816,
-                    longitude: 127.367692)
-            )
-        )
+        let output = viewModel.transform(input)
+
+        output.setAnnotataion.subscribe(onNext: { [weak self] annotation in
+            self?.setAnnotation(annotation: annotation)
+        })
+        .disposed(by: disposeBag)
+
+        output.moveMyLocation
+            .subscribe(onNext: { [weak self] in
+                self?.moveMyLocation(animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        output.selectNearestAnnotation.subscribe(onNext: { [weak self] in
+            self?.selectNearestAnnotataion()
+        })
+        .disposed(by: disposeBag)
+
+        output.showFloatingPanel.subscribe(onNext: { [weak self] annotation in
+            self?.showFloatingPanel(selectedAnnotation: annotation)
+        })
+        .disposed(by: disposeBag)
+
+        output.hideFloatingPanel.subscribe(onNext: { [weak self] in
+            self?.hideFloatingPanel()
+        })
+        .disposed(by: disposeBag)
+
+        output.deselecteAllAnnotataion.subscribe(onNext: { [weak self] in
+            self?.mapView.deselectAnnotation(self?.mapView.selectedAnnotations.last, animated: true)
+        })
+        .disposed(by: disposeBag)
     }
 
     private func setupSubview() {
@@ -136,16 +136,16 @@ class MapViewController: UIViewController {
 // MARK: - MKMapView
 extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     private func moveMyLocation(animated: Bool) {
-        isTrackingMode = true
-        locationManager.userLocation().subscribe(onSuccess: { [weak self] in
-            let viewRegion = MKCoordinateRegion(
-                center: $0,
-                latitudinalMeters: 800,
-                longitudinalMeters: 800
-            )
-            self?.mapView.setRegion(viewRegion, animated: animated)
-        })
-        .disposed(by: disposeBag)
+        locationManager.userLocation()
+            .subscribe(onSuccess: { [weak self] in
+                let viewRegion = MKCoordinateRegion(
+                    center: $0,
+                    latitudinalMeters: 800,
+                    longitudinalMeters: 800
+                )
+                self?.mapView.setRegion(viewRegion, animated: animated)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setAnnotation(annotation: StoreAnnotation) {
@@ -168,36 +168,25 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        if isMapFirstLoad {
-            isTrackingMode = true
-            isMapFirstLoad = false
-        }
+        self.mapViewDidFinishLoadingMap.onNext(())
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if view.annotation is MKUserLocation {
-            mapView.deselectAnnotation(view.annotation, animated: false)
-            moveMyLocation(animated: true)
-            selectNearestAnnotataion()
-        } else if let storeAnnotataion = view.annotation as? StoreAnnotation {
-            hideFloatingPanel()
-            showFloatingPanel(selectedAnnotation: storeAnnotataion)
-        }
+        self.annotaationIsSelected.onNext(view)
+    }
+
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        self.annotaationIsDeselected.onNext(())
     }
 
     // mapView가 drag 될때
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        if !animated {
-            isTrackingMode = false
-        }
+        if !animated { userDraggedMapView.onNext(()) }
     }
 
     // User Locationd에 변화가 있을 때
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if isTrackingMode {
-            moveMyLocation(animated: true)
-            selectNearestAnnotataion()
-        }
+        userMoved.onNext(())
     }
 
 }

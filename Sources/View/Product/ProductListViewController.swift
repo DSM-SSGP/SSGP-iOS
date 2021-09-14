@@ -10,6 +10,8 @@ import UIKit
 
 class ProductListViewController: UIViewController {
 
+    private let viewModel = ProductListViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

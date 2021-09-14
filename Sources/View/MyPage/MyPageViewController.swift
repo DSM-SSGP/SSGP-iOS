@@ -12,20 +12,21 @@ import Then
 
 class MyPageViewController: UIViewController {
 
+    private let viewModel = MyPageViewModel()
+
     private lazy var profileImageView = UIImageView().then {
         $0.image = R.image.profileImage()
     }
-
     private lazy var nameLabel = UILabel().then {
         $0.font = .boldSystemFont(ofSize: 40)
         $0.text = "이름"
     }
-
     private lazy var menuTableView = UITableView().then {
         $0.backgroundColor = R.color.myPage()
         $0.separatorStyle = .none
         $0.register(MyPageMenuTableViewCell.self, forCellReuseIdentifier: "myPageCell")
     }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

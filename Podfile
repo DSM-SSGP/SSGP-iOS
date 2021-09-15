@@ -8,13 +8,13 @@ target 'SSGP' do
   # Pods for SSGP
   
   #Networking
-  pod 'Moya/RxSwift', '~> 14.0'
+  pod 'Moya/RxSwift', '~> 15.0'
 
   #Rx
-  pod 'RxSwift', '~> 5.1.0'
-  pod 'RxCocoa', '~> 5.1.0'
-  pod 'RxDataSources', '~> 4.0.0'
-  pod 'RxGesture', '~> 3.0.0'
+  pod 'RxSwift', '~> 6.2.0'
+  pod 'RxCocoa', '~> 6.2.0'
+  pod 'RxDataSources', '~> 5.0.0'
+  pod 'RxGesture', '~> 4.0.0'
 
   #UI
   pod 'SnapKit', '~> 5.0.0'

@@ -43,6 +43,9 @@ class ProductTableViewCell: UITableViewCell {
         button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = R.color.notSelectedIcon()
     }
+    private let likeCounterLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 13)
+    }
     private let nameStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 5
@@ -75,6 +78,7 @@ class ProductTableViewCell: UITableViewCell {
         // demo data
         self.titleLabel.text = "돼지바"
         self.priceLabel.text = "₩2500"
+        self.likeCounterLabel.text = "13"
         self.setStoreList([.cu, .gs25, .emart24])
 
         self.fireButton.rx.tap
@@ -106,6 +110,7 @@ class ProductTableViewCell: UITableViewCell {
         self.horizontalStackView.addArrangedSubview(nameStackView)
         self.nameStackView.addArrangedSubview(titleLabel)
         self.nameStackView.addArrangedSubview(fireButton)
+        self.nameStackView.addArrangedSubview(likeCounterLabel)
 
         pruductImageView.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(20)

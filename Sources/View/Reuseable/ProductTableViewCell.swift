@@ -78,6 +78,7 @@ class ProductTableViewCell: UITableViewCell {
         // demo data
         self.titleLabel.text = "돼지바"
         self.priceLabel.text = "₩2500"
+        self.likeCounterLabel.text = "13"
         self.setStoreList([.cu, .gs25, .emart24])
 
         self.fireButton.rx.tap

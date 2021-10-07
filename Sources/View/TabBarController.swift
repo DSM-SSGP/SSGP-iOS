@@ -55,7 +55,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     func setCustomTabBar() {
         // set color
         self.tabBar.isTranslucent = false
-        self.tabBar.barTintColor = R.color.background()
+        self.tabBar.backgroundColor = R.color.background()
 
         // set tab bar items
         self.tabBar.tintColor = .label

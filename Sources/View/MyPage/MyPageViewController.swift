@@ -19,22 +19,29 @@ class MyPageViewController: UIViewController {
     }
     private lazy var nameLabel = UILabel().then {
         $0.font = .boldSystemFont(ofSize: 40)
-        $0.text = "이름"
+        $0.text = "ID"
     }
     private lazy var menuTableView = UITableView().then {
         $0.backgroundColor = R.color.myPage()
         $0.separatorStyle = .none
         $0.register(MyPageMenuTableViewCell.self, forCellReuseIdentifier: "myPageCell")
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         menuTableView.delegate = self
         menuTableView.dataSource = self
+        menuTableView.rowHeight = 50
+        setSectionHeaderTopPadding()
         view.backgroundColor = R.color.myPage()
         setupSubview()
         setNavigationBar()
+    }
+
+    func setSectionHeaderTopPadding() {
+        if #available(iOS 15.0, *) {
+            menuTableView.sectionHeaderTopPadding = 0
+        }
     }
 
     private func setupSubview() {
@@ -80,12 +87,12 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             return 1
         default:
-            return 2
+            return 3
         }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20.0
+        return 20
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -106,10 +113,16 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             cell.menuImageView.tintColor = R.color.fire()
             cell.menuLabel.text = "표시한 제품"
         case [1, 0]:
+            cell.menuImageView.image = UIImage(systemName: "bell.fill")
+            cell.menuImageView.tintColor = R.color.myPageMenu()
+            cell.menuLabel.text = "알림 켜기"
+            cell.notificationSwitch.isHidden = false
+            cell.selectButton.isHidden = true
+        case [1, 1]:
             cell.menuImageView.image = UIImage(systemName: "square.and.pencil")
             cell.menuImageView.tintColor = R.color.myPageMenu()
             cell.menuLabel.text = "내 정보 수정"
-        case [1, 1]:
+        case [1, 2]:
             cell.menuImageView.image = UIImage(systemName: "square.and.arrow.up")
             cell.menuImageView.tintColor = R.color.myPageMenu()
             cell.menuLabel.text = "로그아웃"

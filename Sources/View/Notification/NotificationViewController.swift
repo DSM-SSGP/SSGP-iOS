@@ -35,7 +35,7 @@ class NotificationViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        setNavigationBar(title: "알림")
+        setLargeTitleNavigationBar(title: "알림")
     }
 
     // MARK: - private method

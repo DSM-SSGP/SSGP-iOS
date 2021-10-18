@@ -23,7 +23,7 @@ extension UIViewController {
         self.present(viewController, animated: true, completion: nil)
     }
     
-    func setNavigationBar(title: String) {
+    func setLargeTitleNavigationBar(title: String) {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.setBackButon()
         self.navigationController?.navigationBar.backgroundColor = nil

@@ -35,7 +35,7 @@ class NotificationViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        setNavigationBar()
+        setLargeTitleNavigationBar(title: "알림")
     }
 
     // MARK: - private method
@@ -58,16 +58,6 @@ class NotificationViewController: UIViewController {
             $0.left.right.top.bottom.equalToSuperview()
         }
     }
-
-    private func setNavigationBar() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.setBackButon()
-        self.navigationController?.navigationBar.backgroundColor = nil
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-        self.navigationItem.title = "알림"
-    }
-
 }
 
 extension NotificationViewController: UITableViewDelegate {

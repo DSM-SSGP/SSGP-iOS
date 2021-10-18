@@ -22,4 +22,13 @@ extension UIViewController {
         }
         self.present(viewController, animated: true, completion: nil)
     }
+    
+    func setLargeTitleNavigationBar(title: String) {
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.setBackButon()
+        self.navigationController?.navigationBar.backgroundColor = nil
+        self.navigationController?.navigationBar.shadowImage = nil
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+        self.navigationItem.title = title
+    }
 }

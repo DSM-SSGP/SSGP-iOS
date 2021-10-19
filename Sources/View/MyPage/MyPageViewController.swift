@@ -131,4 +131,13 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath {
+        case [1, 1]:
+            navigationController?.pushViewController(EditProfileViewController(), animated: true)
+        default:
+            break
+        }
+    }
 }

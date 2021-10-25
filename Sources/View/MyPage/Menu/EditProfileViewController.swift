@@ -60,7 +60,7 @@ class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubView()
-        view.backgroundColor = R.color.myPage()
+        view.backgroundColor = R.color.background()
     }
 
     override func viewWillAppear(_ animated: Bool) {

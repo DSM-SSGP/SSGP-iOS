@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import RxViewController
 
 extension UIView {
-   func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+    func roundCorners(corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(
             roundedRect: bounds,
             byRoundingCorners: corners,

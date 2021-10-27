@@ -15,6 +15,7 @@ target 'SSGP' do
   pod 'RxCocoa', '~> 6.2.0'
   pod 'RxDataSources', '~> 5.0.0'
   pod 'RxGesture', '~> 4.0.0'
+  pod 'RxKeyboard', '~> 2.0.0'
 
   #UI
   pod 'SnapKit', '~> 5.0.0'

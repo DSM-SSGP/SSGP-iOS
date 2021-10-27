@@ -136,6 +136,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath {
         case [1, 1]:
             navigationController?.pushViewController(EditProfileViewController(), animated: true)
+        case [0, 0]:
+            navigationController?.pushViewController(LikedProductViewController(), animated: true)
         default:
             break
         }

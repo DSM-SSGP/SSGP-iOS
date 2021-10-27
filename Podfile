@@ -25,6 +25,7 @@ target 'SSGP' do
   pod 'Nuke', '~> 9.5.0'
   pod 'lottie-ios', '~> 3.2.3'
   pod 'DropDown', '~> 2.3.13'
+  pod 'TextFieldEffects', '~> 1.6.0'
 
   #ect
   pod 'SwiftLint', '~> 0.43.0'

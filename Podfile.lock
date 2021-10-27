@@ -78,19 +78,14 @@ PODS:
   - RxGesture (4.0.2):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
-  - RxKeyboard (2.0.0):
-    - RxCocoa (~> 6.0)
-    - RxSwift (~> 6.0)
   - RxRelay (6.2.0):
     - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
-  - RxViewController (2.0.0):
-    - RxCocoa (~> 6.0)
-    - RxSwift (~> 6.0)
   - SnapKit (5.0.1)
   - SwiftLint (0.43.1)
   - Tabman (2.11.1):
     - Pageboy (~> 3.6.0)
+  - TextFieldEffects (1.6.0)
   - Then (2.7.0)
 
 DEPENDENCIES:
@@ -105,12 +100,11 @@ DEPENDENCIES:
   - RxCocoa (~> 6.2.0)
   - RxDataSources (~> 5.0.0)
   - RxGesture (~> 4.0.0)
-  - RxKeyboard (~> 2.0.0)
   - RxSwift (~> 6.2.0)
-  - RxViewController (~> 2.0.0)
   - SnapKit (~> 5.0.0)
   - SwiftLint (~> 0.43.0)
   - Tabman (~> 2.11)
+  - TextFieldEffects (~> 1.6.0)
   - Then (~> 2.7.0)
 
 SPEC REPOS:
@@ -138,13 +132,12 @@ SPEC REPOS:
     - RxCocoa
     - RxDataSources
     - RxGesture
-    - RxKeyboard
     - RxRelay
     - RxSwift
-    - RxViewController
     - SnapKit
     - SwiftLint
     - Tabman
+    - TextFieldEffects
     - Then
 
 SPEC CHECKSUMS:
@@ -171,15 +164,14 @@ SPEC CHECKSUMS:
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: f059f2aeef966fb17dad56ee440e76410f10e55f
-  RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
-  RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
+  TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 69576131058b70af95fb9163490d269d7ab3a8b4
+PODFILE CHECKSUM: a6a65629dcbc6e6bdc4500edb678f5b803226122
 
 COCOAPODS: 1.11.2

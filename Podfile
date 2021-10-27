@@ -15,6 +15,8 @@ target 'SSGP' do
   pod 'RxCocoa', '~> 6.2.0'
   pod 'RxDataSources', '~> 5.0.0'
   pod 'RxGesture', '~> 4.0.0'
+  pod 'RxKeyboard', '~> 2.0.0'
+  pod 'RxViewController', '~> 2.0.0'
 
   #UI
   pod 'SnapKit', '~> 5.0.0'
@@ -23,6 +25,7 @@ target 'SSGP' do
   pod 'Nuke', '~> 9.5.0'
   pod 'lottie-ios', '~> 3.2.3'
   pod 'DropDown', '~> 2.3.13'
+  pod 'TextFieldEffects', '~> 1.6.0'
 
   #ect
   pod 'SwiftLint', '~> 0.43.0'

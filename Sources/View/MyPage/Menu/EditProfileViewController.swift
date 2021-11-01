@@ -65,6 +65,7 @@ class EditProfileViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         setLargeTitleNavigationBar(title: "내 정보 수정")
+        tabBarController?.tabBar.isHidden = true
     }
 
     override func viewDidLayoutSubviews() {

@@ -49,23 +49,24 @@ class LikedProductViewController: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
 
         let image = UIImage(systemName: "flame")
-        let imageView = UIImageView()
-        imageView.image = image
-        imageView.tintColor = R.color.fire()
+        let imageView = UIImageView().then {
+            $0.image = image
+            $0.tintColor = R.color.fire()
+        }
 
-        let textLabel = UILabel()
-        textLabel.text  = "표시한 제품"
-        textLabel.textAlignment = .center
+        let textLabel = UILabel().then {
+            $0.text  = "표시한 제품"
+            $0.textAlignment = .center
+        }
 
-        let stackView   = UIStackView()
-        stackView.axis  = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.spacing   = 4.0
-
-        stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(textLabel)
-
+        let stackView = UIStackView().then {
+            $0.axis  = NSLayoutConstraint.Axis.horizontal
+            $0.distribution  = UIStackView.Distribution.equalSpacing
+            $0.alignment = UIStackView.Alignment.center
+            $0.spacing   = 4.0
+            $0.addArrangedSubview(imageView)
+            $0.addArrangedSubview(textLabel)
+        }
         self.navigationItem.titleView = stackView
     }
 

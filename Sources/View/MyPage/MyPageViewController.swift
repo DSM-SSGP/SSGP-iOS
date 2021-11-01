@@ -37,6 +37,10 @@ class MyPageViewController: UIViewController {
         setupSubview()
         setNavigationBar()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
 
     func setSectionHeaderTopPadding() {
         if #available(iOS 15.0, *) {
@@ -134,6 +138,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath {
+        case [0, 0]:
+            navigationController?.pushViewController(LikedProductViewController(), animated: true)
         case [1, 1]:
             navigationController?.pushViewController(EditProfileViewController(), animated: true)
         default:

@@ -28,6 +28,10 @@ class LikedProductViewController: UIViewController {
         setNavigationBar()
         bind()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
 
     private func bind() {
         let demoData = ["asdf"]

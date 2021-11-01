@@ -11,42 +11,44 @@ import SnapKit
 import Then
 import RxCocoa
 import RxSwift
+import TextFieldEffects
 
 class EditProfileViewController: UIViewController {
 
-    private let currentPWLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15)
-        $0.textColor = R.color.noticeTitle()
-        $0.text = "현재 PW"
-    }
-
-    private let currentPWTextField = UITextField().then {
+    private let currentPWTextField = HoshiTextField().then {
+        $0.placeholder = "현재 PW"
         $0.font = .systemFont(ofSize: 16)
+        $0.placeholderColor = R.color.noticeTitle()!
+        $0.borderInactiveColor = R.color.noticeTitle()
+        $0.borderActiveColor = R.color.accentColor()
         $0.isSecureTextEntry = true
+        $0.keyboardType = .asciiCapable
+        $0.autocorrectionType = .no
+        $0.autocapitalizationType = .none
     }
 
-    private let newPWLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15)
-        $0.textColor = R.color.noticeTitle()
-        $0.text = "변경할 PW"
-    }
-
-    private let newPWTextField = UITextField().then {
+    private let newPWTextField = HoshiTextField().then {
+        $0.placeholder = "변경할 PW"
         $0.font = .systemFont(ofSize: 16)
+        $0.placeholderColor = R.color.noticeTitle()!
+        $0.borderInactiveColor = R.color.noticeTitle()
+        $0.borderActiveColor = R.color.accentColor()
         $0.isSecureTextEntry = true
-        $0.borderStyle = .none
+        $0.keyboardType = .asciiCapable
+        $0.autocorrectionType = .no
+        $0.autocapitalizationType = .none
     }
 
-    private let confirmPWLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15)
-        $0.textColor = R.color.noticeTitle()
-        $0.text = "변경할 PW 확인"
-    }
-
-    private let confirmPWTextField = UITextField().then {
+    private let confirmPWTextField = HoshiTextField().then {
+        $0.placeholder = "변경할 PW 확인"
         $0.font = .systemFont(ofSize: 16)
+        $0.placeholderColor = R.color.noticeTitle()!
+        $0.borderInactiveColor = R.color.noticeTitle()
+        $0.borderActiveColor = R.color.accentColor()
         $0.isSecureTextEntry = true
-        $0.borderStyle = .none
+        $0.keyboardType = .asciiCapable
+        $0.autocorrectionType = .no
+        $0.autocapitalizationType = .none
     }
 
     private let doneButton = UIButton().then {
@@ -68,59 +70,36 @@ class EditProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
 
-    override func viewDidLayoutSubviews() {
-        makeUnderLine()
-    }
-
     private func setupSubView() {
-        [currentPWLabel, currentPWTextField, newPWLabel,
-         newPWTextField, confirmPWLabel, confirmPWTextField, doneButton]
+        [currentPWTextField, newPWTextField, confirmPWTextField, doneButton]
             .forEach({self.view.addSubview($0)})
 
-        currentPWLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(180)
-            $0.leading.equalToSuperview().offset(30)
-        }
-
         currentPWTextField.snp.makeConstraints {
-            $0.top.equalTo(currentPWLabel.snp.bottom).offset(10)
+            $0.top.equalToSuperview().offset(160)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
-        }
-
-        newPWLabel.snp.makeConstraints {
-            $0.top.equalTo(currentPWTextField.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().offset(30)
+            $0.height.equalTo(60)
         }
 
         newPWTextField.snp.makeConstraints {
-            $0.top.equalTo(newPWLabel.snp.bottom).offset(10)
+            $0.top.equalTo(currentPWTextField.snp.bottom).offset(40)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
-        }
-
-        confirmPWLabel.snp.makeConstraints {
-            $0.top.equalTo(newPWTextField.snp.bottom).offset(15)
-            $0.leading.equalTo(30)
+            $0.height.equalTo(60)
         }
 
         confirmPWTextField.snp.makeConstraints {
-            $0.top.equalTo(confirmPWLabel.snp.bottom).offset(10)
+            $0.top.equalTo(newPWTextField.snp.bottom).offset(10)
             $0.leading.equalTo(30)
             $0.trailing.equalTo(-30)
+            $0.height.equalTo(60)
         }
 
         doneButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-20)
+            $0.bottom.equalTo(view).offset(30)
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
             $0.height.equalTo(45)
         }
-    }
-
-    private func makeUnderLine() {
-        currentPWTextField.underLine()
-        newPWTextField.underLine()
-        confirmPWTextField.underLine()
     }
 }

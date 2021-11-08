@@ -35,7 +35,7 @@ class ProductDetailViewController: UIViewController {
         $0.image = UIImage(systemName: "flame")
         $0.tintColor = R.color.notSelectedIcon()
     }
-    
+
     private let productDetailTableView = UITableView().then {
         $0.backgroundColor = .clear
         $0.separatorStyle = .none
@@ -50,6 +50,12 @@ class ProductDetailViewController: UIViewController {
         setupSubView()
         view.backgroundColor = R.color.background()
         fireRadioButton()
+        productDetailTableView.dataSource = self
+        productDetailTableView.delegate = self
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = true
     }
 
     private func setNavigationBar() {
@@ -91,11 +97,11 @@ class ProductDetailViewController: UIViewController {
             $0.top.equalTo(productName.snp.bottom).offset(5)
             $0.centerX.equalToSuperview()
         }
-        
+
         productDetailTableView.snp.makeConstraints {
-            $0.top.equalTo(countFireLabel.snp.bottom).offset(5)
+            $0.top.equalTo(countFireLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(50)
         }
     }
 

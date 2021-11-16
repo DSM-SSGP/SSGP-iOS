@@ -7,14 +7,17 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol ViewModel: AnyObject {
+    var disposeBag: DisposeBag { get }
+    var output: Output {get}
+
     associatedtype Input
     associatedtype Output
 
     func transform(_ input: Input) -> Output
 }
-
 
 /*
  
@@ -23,7 +26,8 @@ protocol ViewModel: AnyObject {
  import RxSwift
 
  class SomeViewModel: ViewModel {
-     private let disposeBag = DisposeBag()
+     let disposeBag = DisposeBag()
+     let output = Output()
 
      struct Input {
      }
@@ -32,7 +36,7 @@ protocol ViewModel: AnyObject {
      }
 
      func transform(_ input: Input) -> Output {
-        return Output()
+        return output
      }
  }
  

@@ -53,7 +53,7 @@ class UIDropDownButton: UIButton {
     }
 
     // Private Method
-    private func setDropDownButton() {
+    func setDropDownButton() {
         self.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.right
         self.contentMode = .right
         self.setTitle("\(SortMethod.allCasesStr()[0]) ▾", for: .normal)

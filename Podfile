@@ -8,6 +8,7 @@ target 'SSGP' do
   # Pods for SSGP
   
   #Networking
+  pod 'KeychainSwift', '~> 19.0'
   pod 'Moya/RxSwift', '~> 15.0'
 
   #Rx

@@ -10,7 +10,8 @@ import Foundation
 import RxSwift
 
 class ProductListViewModel: ViewModel {
-    private let disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
+    let output = Output()
 
     struct Input {
     }
@@ -19,6 +20,6 @@ class ProductListViewModel: ViewModel {
     }
 
     func transform(_ input: Input) -> Output {
-       return Output()
+        return output
     }
 }

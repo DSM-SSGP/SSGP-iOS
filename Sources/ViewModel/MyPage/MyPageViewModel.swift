@@ -10,7 +10,9 @@ import Foundation
 import RxSwift
 
 class MyPageViewModel: ViewModel {
-    private let disposeBag = DisposeBag()
+
+    let disposeBag = DisposeBag()
+    let output = Output()
 
     struct Input {
     }
@@ -19,6 +21,6 @@ class MyPageViewModel: ViewModel {
     }
 
     func transform(_ input: Input) -> Output {
-       return Output()
+        return output
     }
 }

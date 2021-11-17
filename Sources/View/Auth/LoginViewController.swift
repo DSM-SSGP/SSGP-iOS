@@ -135,7 +135,7 @@ class LoginViewController: UIViewController {
             $0.top.equalToSuperview().offset(30)
         }
         idTextField.snp.makeConstraints {
-            $0.top.equalTo(welcomeLabel.snp.bottom).offset(50)
+            $0.top.equalTo(welcomeLabel.snp.bottom).offset(40)
             $0.left.equalToSuperview().offset(30)
             $0.right.equalToSuperview().offset(-30)
             $0.height.equalTo(60)
@@ -159,8 +159,29 @@ class LoginViewController: UIViewController {
     }
 
     private func bind() {
+        self.view.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+            })
+            .disposed(by: disposeBag)
+
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { keyboardHeight in
+                self.loginContentView.snp.updateConstraints {
+                    if keyboardHeight == 0.0 {
+                        $0.top.equalToSuperview().offset(140)
+                    } else {
+                        $0.top.equalToSuperview().offset(0)
+                    }
+                }
+                self.welcomeLabel.snp.updateConstraints {
+                    if keyboardHeight == 0.0 {
+                        $0.top.equalToSuperview().offset(30)
+                    } else {
+                        $0.top.equalToSuperview().offset(60)
+                    }
+                }
                 self.loginButton.snp.updateConstraints {
                     $0.bottom.equalToSuperview().offset(-keyboardHeight-40)
                 }

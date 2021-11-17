@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 class LoginViewModel: ViewModel {
 
@@ -15,9 +16,11 @@ class LoginViewModel: ViewModel {
     let output = Output()
 
     struct Input {
+        let loginButtonIsTapped: Driver<(id: String, pwd: String)>
     }
 
     struct Output {
+        let loginResult = PublishRelay<String>()
     }
 
     func transform(_ input: Input) -> Output {

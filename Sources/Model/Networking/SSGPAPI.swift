@@ -127,12 +127,12 @@ extension SSGPAPI: TargetType {
     var headers: [String: String]? {
         switch self {
         default:
-            return ["Authoriztion": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0NjYyZDRiYy0yYWNkLTRhMjgtYjE4My00Y2FjNGI4YTY4N2QiLCJpYXQiOjE2MzcxNjE3NDYsInN1YiI6InRlc3QiLCJ1c2VyVHlwZSI6InVzZXIiLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjM3MjQ4MTQ2fQ.35yKM2_GZC4ml7GQn4M5UgAxZb_F_jATB8oMhHGka_A"]
+            return ["Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3NmEwNDBkZi0zZjdlLTRhNmUtYWIzMy03YjVkZjYzZmU0NTkiLCJpYXQiOjE2MzcxMTQ5ODcsInN1YiI6InRlc3QiLCJ1c2VyVHlwZSI6InVzZXIiLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjM3MjAxMzg3fQ.kz2dHaxiFWkiSXWQrzWKcJ8VKxfzI_giRVUC1VtaIqE"]
         }
     }
     
     var validationType: ValidationType{
-        return .successCodes
+        return .successAndRedirectCodes
     }
 
 }

@@ -7,33 +7,132 @@
 //
 
 import Moya
+import KeychainSwift
 
 enum SSGPAPI {
+    // auth
+    case login(_ id: String, _ password: String)
+    case signUp(_ id: String, _ password: String)
+
+    // Mypage
+    case likeList
+    case updatePassword(_ password: String)
+    case onOffNotice
+    
+    // Map
+    case findNearbyStore(_ x: String, _ y: String)
+    case showNotificationList
+
+    // Product
+    case popularityList
+    case recommendationList
+    case lowestList
+    case productDetail(_ productId: String)
+    case likeProduct(_ userId: String, _ productId: String)
+    case searchProduct
 }
 
 extension SSGPAPI: TargetType {
     var baseURL: URL {
-        return URL(string: "")!
+        return URL(string: "http://13.124.215.192:8000")!
     }
 
     var path: String {
-        return ""
+        switch self {
+        case .login:
+            return "/auth"
+        case .signUp, .onOffNotice:
+            return "/user"
+        case .likeList:
+            return "/likelist"
+        case .updatePassword:
+            return "/password"
+        case .findNearbyStore:
+            return "/map"
+        case .showNotificationList:
+            return "/notification/list"
+        case .popularityList:
+            return "/product/popular"
+        case .recommendationList:
+            return "/product/recommend"
+        case .lowestList:
+            return "/product/lowPrice"
+        case .productDetail(let productId):
+            return "/product/detail/\(productId)"
+        case .likeProduct(_, let productId):
+            return "/product/detail/\(productId)"
+        case .searchProduct:
+            return "/product/lowPrice"
+        }
     }
 
-    var method: Method {
-        return .get
-    }
-
-    var sampleData: Data {
-        return Data()
+    var method: Moya.Method {
+        switch self {
+        case .findNearbyStore, .showNotificationList,
+                .likeList, .popularityList, .recommendationList, .lowestList,
+                .productDetail, .searchProduct:
+            return .get
+        case .login, .signUp:
+            return .post
+        case .updatePassword, .onOffNotice:
+            return .patch
+        case .likeProduct:
+            return .put
+        }
     }
 
     var task: Task {
-        return .requestPlain
+        switch self {
+        case .login(let id, let password),
+                .signUp(let id, let password):
+            return .requestParameters(
+                parameters: [
+                    "id": id,
+                    "password": password
+                ],
+                encoding: JSONEncoding.prettyPrinted
+            )
+
+        case .updatePassword(let password):
+            return .requestParameters(
+                parameters: [
+                    "password": password
+                ],
+                encoding: JSONEncoding.prettyPrinted
+            )
+
+        case .findNearbyStore(let x, let y):
+            return .requestParameters(
+                parameters: [
+                    "x": x,
+                    "y": y
+                ],
+                encoding: URLEncoding.default
+            )
+
+        case .likeProduct(let userId, let productId):
+            return .requestParameters(
+                parameters: [
+                    "userId": userId,
+                    "productId": productId
+                ],
+                encoding: URLEncoding.default
+            )
+
+        default:
+            return .requestPlain
+        }
     }
 
     var headers: [String: String]? {
-        return nil
+        switch self {
+        default:
+            return ["Authoriztion": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0NjYyZDRiYy0yYWNkLTRhMjgtYjE4My00Y2FjNGI4YTY4N2QiLCJpYXQiOjE2MzcxNjE3NDYsInN1YiI6InRlc3QiLCJ1c2VyVHlwZSI6InVzZXIiLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjM3MjQ4MTQ2fQ.35yKM2_GZC4ml7GQn4M5UgAxZb_F_jATB8oMhHGka_A"]
+        }
+    }
+    
+    var validationType: ValidationType{
+        return .successCodes
     }
 
 }

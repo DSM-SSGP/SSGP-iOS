@@ -127,12 +127,22 @@ extension SSGPAPI: TargetType {
     var headers: [String: String]? {
         switch self {
         default:
-            return ["Authorization": "Bearer " + "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3NmEwNDBkZi0zZjdlLTRhNmUtYWIzMy03YjVkZjYzZmU0NTkiLCJpYXQiOjE2MzcxMTQ5ODcsInN1YiI6InRlc3QiLCJ1c2VyVHlwZSI6InVzZXIiLCJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNjM3MjAxMzg3fQ.kz2dHaxiFWkiSXWQrzWKcJ8VKxfzI_giRVUC1VtaIqE"]
+            return ["Authorization": "Bearer " + accessTocken]
         }
     }
     
     var validationType: ValidationType{
         return .successAndRedirectCodes
+    }
+
+    private var accessTocken: String {
+        let keychain = KeychainSwift()
+        return keychain.get("ACCESS-TOKEN") ?? ""
+    }
+
+    private var refreshToken: String {
+        let keychain = KeychainSwift()
+        return keychain.get("REFRESH-TOKEN") ?? ""
     }
 
 }

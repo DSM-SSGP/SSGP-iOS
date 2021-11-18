@@ -10,15 +10,19 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import RxCocoa
 import Lottie
 import AuthenticationServices
 import TextFieldEffects
 import RxKeyboard
+import Loaf
 
 class LoginViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = LoginViewModel()
     let disposeBag = DisposeBag()
+
+    private let loginButtonIsTapped = PublishSubject<(id: String, pwd: String)>()
 
     private let welcomeLabel = UILabel().then {
         $0.text = "로그인 하여\n싸가편을 시작하세요!"
@@ -97,6 +101,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         setupSubview()
+        setKeyboardAction()
         bind()
     }
 
@@ -158,7 +163,7 @@ class LoginViewController: UIViewController {
         }
     }
 
-    private func bind() {
+    private func setKeyboardAction() {
         self.view.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
@@ -187,5 +192,41 @@ class LoginViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+    }
+
+    private func bind() {
+        let input = LoginViewModel.Input(
+            loginButtonIsTapped: self.loginButtonIsTapped.asDriver(
+                onErrorJustReturn: ("", "")
+            )
+        )
+        let output = viewModel.transform(input)
+
+        self.loginButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.loginButtonIsTapped.onNext((
+                    id: self?.idTextField.text ?? "",
+                    pwd: self?.pwTextField.text ?? ""
+                ))
+            })
+            .disposed(by: disposeBag)
+
+        output.loginResult.subscribe(onNext: { [weak self] isSuccess in
+            if isSuccess {
+                Loaf(
+                    "로그인 성공",
+                    state: .success,
+                    location: .top,
+                    sender: self!
+                ).show()
+            } else {
+                Loaf(
+                    "아이디 혹은 비밀번호가 틀렸습니다.",
+                    state: .error,
+                    location: .top,
+                    sender: self!
+                ).show()
+            }
+        }).disposed(by: disposeBag)
     }
 }

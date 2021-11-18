@@ -1,4 +1,6 @@
 import UIKit
+import RxSwift
+import KeychainSwift
 import Firebase
 
 @main
@@ -6,15 +8,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    private let disposeBag = DisposeBag()
+    private let keychain = KeychainSwift()
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let rootViewController = TabBarController()
-        window?.rootViewController = rootViewController
-        window?.makeKeyAndVisible()
-        window?.backgroundColor = R.color.background()
+        HTTPClient.shared.networking(
+            api: .tokenRefresh,
+            model: TokenModel.self
+        ).subscribe(onSuccess: { token in
+
+            self.keychain.set(token.access_token, forKey: "ACCESS-TOKEN")
+
+            let rootViewController = TabBarController()
+            self.window?.rootViewController = rootViewController
+            self.window?.makeKeyAndVisible()
+            self.window?.backgroundColor = R.color.background()
+
+        }, onFailure: { _ in
+
+            let rootViewController = LoginViewController()
+            self.window?.rootViewController = rootViewController
+            self.window?.makeKeyAndVisible()
+            self.window?.backgroundColor = R.color.background()
+
+        }).disposed(by: disposeBag)
 
         FirebaseApp.configure()
         UNUserNotificationCenter.current().delegate = self

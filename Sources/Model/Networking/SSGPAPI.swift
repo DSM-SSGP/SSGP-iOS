@@ -133,7 +133,7 @@ extension SSGPAPI: TargetType {
             return ["Content-Type": "application/json"]
         case .tokenRefresh:
             return [
-                "Authorization": refreshToken,
+                "Authorization": "Bearer " + refreshToken,
                 "Content-Type": "application/json"
             ]
         default:
@@ -155,9 +155,6 @@ extension SSGPAPI: TargetType {
 
     private var refreshToken: String {
         let keychain = KeychainSwift()
-        print("!!!!!!!")
-        print(keychain.get("REFRESH-TOKEN") ?? "")
-        print("!!!!!!!")
         return keychain.get("REFRESH-TOKEN") ?? ""
     }
 

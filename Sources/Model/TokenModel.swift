@@ -12,3 +12,7 @@ struct TokenModel: Codable {
     let access_token: String
     let refresh_token: String
 }
+
+struct RefreshedTokenModel: Codable {
+    let access_token: String
+}

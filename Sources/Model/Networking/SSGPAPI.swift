@@ -13,6 +13,7 @@ enum SSGPAPI {
     // auth
     case login(_ id: String, _ password: String)
     case signUp(_ id: String, _ password: String)
+    case tokenRefresh
 
     // Mypage
     case likeList
@@ -41,6 +42,8 @@ extension SSGPAPI: TargetType {
         switch self {
         case .login:
             return "/auth"
+        case .tokenRefresh:
+            return "/refresh"
         case .signUp, .onOffNotice:
             return "/user"
         case .likeList:
@@ -72,7 +75,7 @@ extension SSGPAPI: TargetType {
                 .likeList, .popularityList, .recommendationList, .lowestList,
                 .productDetail, .searchProduct:
             return .get
-        case .login, .signUp:
+        case .login, .signUp, .tokenRefresh:
             return .post
         case .updatePassword, .onOffNotice:
             return .patch
@@ -128,6 +131,11 @@ extension SSGPAPI: TargetType {
         switch self {
         case .login, .signUp:
             return ["Content-Type": "application/json"]
+        case .tokenRefresh:
+            return [
+                "Authorization": refreshToken,
+                "Content-Type": "application/json"
+            ]
         default:
             return [
                 "Authorization": "Bearer " + accessTocken,
@@ -147,6 +155,9 @@ extension SSGPAPI: TargetType {
 
     private var refreshToken: String {
         let keychain = KeychainSwift()
+        print("!!!!!!!")
+        print(keychain.get("REFRESH-TOKEN") ?? "")
+        print("!!!!!!!")
         return keychain.get("REFRESH-TOKEN") ?? ""
     }
 

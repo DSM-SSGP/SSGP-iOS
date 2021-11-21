@@ -13,8 +13,8 @@ import RxSwift
 import RxCocoa
 
 class MapViewModel: ViewModel {
-    private let disposeBag = DisposeBag()
-    private let output = Output()
+    var disposeBag = DisposeBag()
+    var output = Output()
 
     private var isTrackingMode = true
     private var isMapFirstLoad = true
@@ -50,7 +50,7 @@ class MapViewModel: ViewModel {
 
         // annotation이 선택되었을때
         input.annotaationIsSelected.asObservable()
-            .observeOn(MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.asyncInstance)
             .subscribe(onNext: { [weak self] annotataionView in
                 if annotataionView?.annotation is MKUserLocation {
                     self?.isTrackingMode = true

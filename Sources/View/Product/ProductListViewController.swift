@@ -12,9 +12,9 @@ import Tabman
 import SnapKit
 import DropDown
 import RxSwift
+import Then
 
 class ProductListViewController: TabmanViewController {
-
     let disposeBag = DisposeBag()
 
     lazy var button = UIDropDownButton().then {
@@ -41,6 +41,7 @@ class ProductListViewController: TabmanViewController {
         super.viewDidLoad()
         setNavigationBar()
         setViewControllers()
+        view.backgroundColor = R.color.background()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -48,10 +49,14 @@ class ProductListViewController: TabmanViewController {
     }
 
     private func setNavigationBar() {
-        setLargeTitleNavigationBar(title: "제품")
-        self.navigationItem.rightBarButtonItem = barButtonItem
-        let searchController = UISearchController(searchResultsController: nil)
-        self.navigationItem.searchController = searchController
+        navigationItem.title = "제품"
+        navigationItem.rightBarButtonItem = barButtonItem
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "검색"
+        navigationItem.titleView = searchBar
+        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.isTranslucent = true
     }
 
     private func setViewControllers() {
@@ -68,10 +73,14 @@ class ProductListViewController: TabmanViewController {
 
         let bar = TMBar.ButtonBar()
         bar.layout.transitionStyle = .snap
-        bar.layout.alignment = .centerDistributed
-        bar.layout.contentMode = .fit
         bar.backgroundView.style = .clear
+        bar.layout.contentMode = .fit
+        bar.layout.alignment = .centerDistributed
         bar.indicator.overscrollBehavior = .bounce
+        bar.buttons.customize { (button) in
+            button.font = .systemFont(ofSize: 12)
+        }
+        
         addBar(bar, dataSource: self, at: .top)
     }
 }
@@ -82,7 +91,8 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
         viewControllers.count
     }
 
-    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
+    func viewController(for pageboyViewController: PageboyViewController,
+                        at index: PageboyViewController.PageIndex) -> UIViewController? {
         return viewControllers[index]
     }
 
@@ -93,28 +103,28 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         switch index {
         case 0:
-            let item = TMBarItem(title: "")
-            item.title = "전체"
+            let item = TMBarItem(title: "전체")
+            item.image = R.image.cU()
             return item
         case 1:
-            let item = TMBarItem(title: "")
-            item.title = "GS25"
+            let item = TMBarItem(title: "GS25")
+            item.image = R.image.gs25()
             return item
         case 2:
-            let item = TMBarItem(title: "")
-            item.title = "CU"
+            let item = TMBarItem(title: "CU")
+            item.image = R.image.cU()
             return item
         case 3:
-            let item = TMBarItem(title: "")
-            item.title = "MiniStop"
+            let item = TMBarItem(title: "MINI\nSTOP")
+            item.image = R.image.ministoP()
             return item
         case 4:
-            let item = TMBarItem(title: "")
-            item.title = "7"
+            let item = TMBarItem(title: "SEVEN\nELEVEN")
+            item.image = R.image.seveneleveN()
             return item
         case 5:
-            let item = TMBarItem(title: "")
-            item.title = "Emart"
+            let item = TMBarItem(title: "EMART")
+            item.image = R.image.emart24()
             return item
         default:
             let item = TMBarItem(title: "")

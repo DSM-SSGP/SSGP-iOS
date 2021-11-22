@@ -72,7 +72,7 @@ class ProductTableViewCell: UITableViewCell {
 
     // MARK: - public method
 
-    public func bind() {
+    public func bind(title: String, price: String, store: [String]) {
         // 후에 파라미터로 데이터 받아서 바인딩
 
         // demo data

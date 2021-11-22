@@ -11,6 +11,8 @@ import SnapKit
 import Then
 
 class StoreMainViewController: UIViewController {
+    
+    let productModel = [ProductList]()
 
     let tableView = UITableView().then {
         $0.register(ProductTableViewCell.self, forCellReuseIdentifier: "productCell")
@@ -23,6 +25,7 @@ class StoreMainViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
     private func setUpSubViews() {
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
@@ -31,17 +34,26 @@ class StoreMainViewController: UIViewController {
             $0.bottom.equalToSuperview()
         }
     }
+
+    init(index: Int) {
+        super.init(nibName: nil, bundle: nil)
+        tableView.tag = index
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension StoreMainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return productModel.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath)
                 as? ProductTableViewCell else { return UITableViewCell() }
-        cell.bind()
+        
         return cell
     }
 }

@@ -60,12 +60,12 @@ class ProductListViewController: TabmanViewController {
     }
 
     private func setViewControllers() {
-        let storeMainVC = StoreMainViewController()
-        let GS25VC = GS25ViewController()
-        let CUVC = CUViewController()
-        let miniStopVC = MiniStopViewController()
-        let sevenElevenVC = SevenElevenViewController()
-        let emartVC = EmartViewController()
+        let storeMainVC = StoreMainViewController(index: 0)
+        let GS25VC = StoreMainViewController(index: 1)
+        let CUVC = StoreMainViewController(index: 2)
+        let miniStopVC = StoreMainViewController(index: 3)
+        let sevenElevenVC = StoreMainViewController(index: 4)
+        let emartVC = StoreMainViewController(index: 5)
 
         [storeMainVC, GS25VC, CUVC, miniStopVC, sevenElevenVC, emartVC].forEach({ viewControllers.append($0) })
 

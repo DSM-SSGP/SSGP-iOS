@@ -8,6 +8,8 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
+import KeychainSwift
 
 class MyPageViewModel: ViewModel {
 
@@ -15,12 +17,22 @@ class MyPageViewModel: ViewModel {
     let output = Output()
 
     struct Input {
+        let logOutButtonIsTapped: Driver<Void>
+        let notificationSwitchIsOn: Driver<Void>
     }
 
     struct Output {
+        var logOutResult = PublishRelay<Bool>()
     }
 
     func transform(_ input: Input) -> Output {
+        input.logOutButtonIsTapped.asObservable()
+            .subscribe(
+                onNext: {
+                    KeychainSwift().delete("ACCESS-TOKEN")
+                }
+            ).disposed(by: disposeBag)
+        
         return output
     }
 }

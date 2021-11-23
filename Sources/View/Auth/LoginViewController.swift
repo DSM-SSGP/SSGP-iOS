@@ -213,12 +213,9 @@ class LoginViewController: UIViewController {
 
         output.loginResult.subscribe(onNext: { [weak self] isSuccess in
             if isSuccess {
-                Loaf(
-                    "로그인 성공",
-                    state: .success,
-                    location: .top,
-                    sender: self!
-                ).show()
+                self?.view.window?.rootViewController = TabBarController()
+                self?.view.window?.makeKeyAndVisible()
+                self?.view.window?.backgroundColor = R.color.background()
             } else {
                 Loaf(
                     "아이디 혹은 비밀번호가 틀렸습니다.",

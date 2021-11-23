@@ -13,6 +13,7 @@ enum SSGPAPI {
     // auth
     case login(_ id: String, _ password: String)
     case signUp(_ id: String, _ password: String)
+    case tokenRefresh
 
     // Mypage
     case likeList
@@ -41,6 +42,8 @@ extension SSGPAPI: TargetType {
         switch self {
         case .login:
             return "/auth"
+        case .tokenRefresh:
+            return "/refresh"
         case .signUp, .onOffNotice:
             return "/user"
         case .likeList:
@@ -76,7 +79,7 @@ extension SSGPAPI: TargetType {
             return .post
         case .updatePassword, .onOffNotice:
             return .patch
-        case .likeProduct:
+        case .tokenRefresh, .likeProduct:
             return .put
         }
     }
@@ -119,6 +122,11 @@ extension SSGPAPI: TargetType {
         switch self {
         case .login, .signUp, .findNearbyStore:
             return ["Content-Type": "application/json"]
+        case .tokenRefresh:
+            return [
+                "Refresh_Token": refreshToken,
+                "Content-Type": "application/json"
+            ]
         default:
             return [
                 "Authorization": "Bearer " + accessTocken,

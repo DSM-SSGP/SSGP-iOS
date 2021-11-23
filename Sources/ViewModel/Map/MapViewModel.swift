@@ -20,6 +20,7 @@ class MapViewModel: ViewModel {
     private var isMapFirstLoad = true
 
     struct Input {
+        let userLocationIsEnabled: Single<CLLocationCoordinate2D>
         let mapViewDidFinishLoadingMap: Driver<Void>
         let annotaationIsSelected: Driver<MKAnnotationView?>
         let annotaationIsDeselected: Driver<Void>
@@ -28,7 +29,7 @@ class MapViewModel: ViewModel {
     }
 
     struct Output {
-        let setAnnotataion = PublishRelay<StoreAnnotation>()
+        let setAnnotataion = PublishRelay<[StoreAnnotation]>()
         let moveMyLocation = PublishRelay<Void>()
         let selectNearestAnnotation = PublishRelay<Void>()
         let deselecteAllAnnotataion = PublishRelay<Void>()
@@ -38,12 +39,22 @@ class MapViewModel: ViewModel {
 
     func transform(_ input: Input) -> Output {
 
+        input.userLocationIsEnabled.subscribe(onSuccess: {
+            HTTPClient.shared.networking(api: .findNearbyStore(
+                String($0.longitude),
+                String($0.latitude)
+            ), model: [CSStoreModel].self)
+                .subscribe(onSuccess: {
+                    self.setAnnotataion(csStores: $0)
+                })
+                .disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+
         // 맵뷰가 처음 로드 되었을때 트랙킹모드를 활설화시킨다.
         input.mapViewDidFinishLoadingMap.asObservable().subscribe(onNext: { [weak self] in
             if self?.isMapFirstLoad ?? false {
                 self?.isMapFirstLoad = false
                 self?.isTrackingMode = true
-                self?.setAnnotataion()
             }
         })
         .disposed(by: disposeBag)
@@ -89,49 +100,10 @@ class MapViewModel: ViewModel {
 }
 
 extension MapViewModel {
-    private func setAnnotataion() {
-        // demo data
-        output.setAnnotataion.accept(
-            StoreAnnotation(
-                identifier: 1,
-                title: "CU 대덕대정곡관점",
-                locationName: nil,
-                discipline: nil,
-                calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
-                saleInfo: "1 + 1",
-                brand: .cu,
-                coordinate: CLLocationCoordinate2D(
-                    latitude: 36.390328,
-                    longitude: 127.363910)
-            )
-        )
-        output.setAnnotataion.accept(
-            StoreAnnotation(
-                identifier: 2,
-                title: "CU 대덕대생활관점",
-                locationName: nil,
-                discipline: nil,
-                calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
-                saleInfo: "2 + 1",
-                brand: .cu,
-                coordinate: CLLocationCoordinate2D(
-                    latitude: 36.389698,
-                    longitude: 127.367955)
-            )
-        )
-        output.setAnnotataion.accept(
-            StoreAnnotation(
-                identifier: 3,
-                title: "CU 대덕대카페테리아점",
-                locationName: nil,
-                discipline: nil,
-                calloutImage: "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png",
-                saleInfo: "1 + 1",
-                brand: .cu,
-                coordinate: CLLocationCoordinate2D(
-                    latitude: 36.390816,
-                    longitude: 127.367692)
-            )
-        )
+    private func setAnnotataion(csStores: [CSStoreModel]) {
+        let annotations = csStores.map {
+            StoreAnnotation(csStore: $0)
+        }
+        self.output.setAnnotataion.accept(annotations)
     }
 }

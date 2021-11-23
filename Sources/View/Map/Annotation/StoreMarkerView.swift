@@ -45,7 +45,7 @@ class StoreMarkerView: MKMarkerAnnotationView {
         if selected {
             store.title = ""
         } else {
-            store.title = self.title
+            store.title = store.placeName
         }
     }
 

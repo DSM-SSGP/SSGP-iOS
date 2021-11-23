@@ -74,6 +74,7 @@ class MapViewController: UIViewController {
 
     private func bind() {
         let input = MapViewModel.Input(
+            userLocationIsEnabled: self.locationManager.userLocation(),
             mapViewDidFinishLoadingMap: mapViewDidFinishLoadingMap.asDriver(onErrorJustReturn: ()),
             annotaationIsSelected: annotaationIsSelected.asDriver(onErrorJustReturn: nil),
             annotaationIsDeselected: annotaationIsDeselected.asDriver(onErrorJustReturn: ()),
@@ -82,8 +83,8 @@ class MapViewController: UIViewController {
         )
         let output = viewModel.transform(input)
 
-        output.setAnnotataion.subscribe(onNext: { [weak self] annotation in
-            self?.setAnnotation(annotation: annotation)
+        output.setAnnotataion.subscribe(onNext: { [weak self] annotations in
+            self?.mapView.addAnnotations(annotations)
         })
         .disposed(by: disposeBag)
 
@@ -148,16 +149,6 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
             .disposed(by: disposeBag)
     }
 
-    private func setAnnotation(annotation: StoreAnnotation) {
-        annotation.calloutView.rx.tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { _ in
-                print(annotation.identifier)
-            })
-            .disposed(by: annotation.disposeBag)
-        self.mapView.addAnnotation(annotation)
-    }
-
     private func selectNearestAnnotataion() {
         if let nearestAnnotation = mapView.questNearestAnnotation() {
             mapView.selectAnnotation(
@@ -203,7 +194,7 @@ extension MapViewController: FloatingPanelControllerDelegate {
     private func showFloatingPanel(selectedAnnotation: StoreAnnotation) {
         // 플로팅 판넬 데이터 바인딩
         if let ftp = floatingPanelController.contentViewController as? StoreDetailFloatingPanelController {
-            ftp.bind()
+            ftp.bind(selectedAnnotation: selectedAnnotation)
         }
         floatingPanelController.move(to: .half, animated: true)
     }

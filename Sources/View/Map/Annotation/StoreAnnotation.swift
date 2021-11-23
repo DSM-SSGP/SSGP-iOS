@@ -13,10 +13,10 @@ class StoreAnnotation: NSObject, MKAnnotation {
 
     public let disposeBag = DisposeBag()
 
-    let identifier: Int
     var title: String?
-    let locationName: String?
-    let discipline: String?
+    
+    let placeName: String
+    let locationName: String
     let calloutImage: String
     let saleInfo: String
     let brand: Brand
@@ -29,24 +29,17 @@ class StoreAnnotation: NSObject, MKAnnotation {
         }
     }
 
-    init(
-        identifier: Int,
-        title: String?,
-        locationName: String?,
-        discipline: String?,
-        calloutImage: String,
-        saleInfo: String,
-        brand: Brand,
-        coordinate: CLLocationCoordinate2D
-    ) {
-        self.identifier = identifier
-        self.title = title
-        self.locationName = locationName
-        self.discipline = discipline
-        self.calloutImage = calloutImage
-        self.saleInfo = saleInfo
-        self.brand = brand
-        self.coordinate = coordinate
+    init(csStore: CSStoreModel) {
+        self.title = csStore.place_name
+        self.placeName = csStore.place_name
+        self.locationName = csStore.address_name
+        self.calloutImage = "https://i.ibb.co/gS2kj1X/5d6fee703b00009605cd1bad-1.png"
+        self.saleInfo = ""
+        self.brand = csStore.categoryNameToBrand()
+        self.coordinate = CLLocationCoordinate2D(
+            latitude: Double(csStore.y)!,
+            longitude: Double(csStore.x)!
+        )
 
         super.init()
     }

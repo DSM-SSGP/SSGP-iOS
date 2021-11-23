@@ -50,7 +50,7 @@ class MapViewModel: ViewModel {
                 .disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
 
-        // 맵뷰가 처음 로드 되었을때 트랙킹모드를 활설화시킨다.
+        // 맵뷰가 처음 로드 되었을때 트랙킹모드를 활성화시킨다.
         input.mapViewDidFinishLoadingMap.asObservable().subscribe(onNext: { [weak self] in
             if self?.isMapFirstLoad ?? false {
                 self?.isMapFirstLoad = false

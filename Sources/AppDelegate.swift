@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ).subscribe(onSuccess: { token in
 
             self.keychain.set(token.access_token, forKey: "ACCESS-TOKEN")
+            self.keychain.set(token.refresh_token, forKey: "REFRESH-TOKEN")
 
             let rootViewController = TabBarController()
             self.window?.rootViewController = rootViewController

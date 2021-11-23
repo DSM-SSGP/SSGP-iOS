@@ -75,11 +75,11 @@ extension SSGPAPI: TargetType {
                 .likeList, .popularityList, .recommendationList, .lowestList,
                 .productDetail, .searchProduct:
             return .get
-        case .login, .signUp, .tokenRefresh:
+        case .login, .signUp:
             return .post
         case .updatePassword, .onOffNotice:
             return .patch
-        case .likeProduct:
+        case .tokenRefresh, .likeProduct:
             return .put
         }
     }
@@ -133,7 +133,7 @@ extension SSGPAPI: TargetType {
             return ["Content-Type": "application/json"]
         case .tokenRefresh:
             return [
-                "Authorization": "Bearer " + refreshToken,
+                "Refresh_Token": refreshToken,
                 "Content-Type": "application/json"
             ]
         default:

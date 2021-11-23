@@ -120,7 +120,7 @@ extension SSGPAPI: TargetType {
 
     var headers: [String: String]? {
         switch self {
-        case .login, .signUp, .findNearbyStore:
+        case .login, .signUp:
             return ["Content-Type": "application/json"]
         case .tokenRefresh:
             return [

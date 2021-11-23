@@ -32,11 +32,10 @@ class StoreDetailFloatingPanelController: UIViewController {
     }
 
     // MARK: - Public Method
-    public func bind() {
-        // // demo data
-        storeBrandImageView.image = R.image.cU()
-        nameLabel.text = "대덕대 편의점"
-        addressLabel.text = "대전광역시 유성구 장동 가정북로 68"
+    public func bind(selectedAnnotation: StoreAnnotation) {
+        storeBrandImageView.image = selectedAnnotation.brand.fitImage()
+        nameLabel.text = selectedAnnotation.placeName
+        addressLabel.text = selectedAnnotation.locationName
     }
 
     // MARK: - Private Method

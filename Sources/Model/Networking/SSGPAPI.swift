@@ -47,8 +47,8 @@ extension SSGPAPI: TargetType {
             return "/likelist"
         case .updatePassword:
             return "/password"
-        case .findNearbyStore:
-            return "/map"
+        case .findNearbyStore(let x, let y):
+            return "/map/\(x)/\(y)"
         case .showNotificationList:
             return "/notification/list"
         case .popularityList:
@@ -101,15 +101,6 @@ extension SSGPAPI: TargetType {
                 encoding: JSONEncoding.prettyPrinted
             )
 
-        case .findNearbyStore(let x, let y):
-            return .requestParameters(
-                parameters: [
-                    "x": x,
-                    "y": y
-                ],
-                encoding: URLEncoding.default
-            )
-
         case .likeProduct(let userId, let productId):
             return .requestParameters(
                 parameters: [
@@ -126,7 +117,7 @@ extension SSGPAPI: TargetType {
 
     var headers: [String: String]? {
         switch self {
-        case .login, .signUp:
+        case .login, .signUp, .findNearbyStore:
             return ["Content-Type": "application/json"]
         default:
             return [

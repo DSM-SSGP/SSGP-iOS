@@ -80,7 +80,7 @@ class ProductListViewController: TabmanViewController {
         bar.buttons.customize { (button) in
             button.font = .systemFont(ofSize: 12)
         }
-        
+
         addBar(bar, dataSource: self, at: .top)
     }
 }
@@ -104,27 +104,21 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
         switch index {
         case 0:
             let item = TMBarItem(title: "전체")
-            item.image = R.image.cU()
             return item
         case 1:
             let item = TMBarItem(title: "GS25")
-            item.image = R.image.gs25()
             return item
         case 2:
             let item = TMBarItem(title: "CU")
-            item.image = R.image.cU()
             return item
         case 3:
             let item = TMBarItem(title: "MINI\nSTOP")
-            item.image = R.image.ministoP()
             return item
         case 4:
             let item = TMBarItem(title: "SEVEN\nELEVEN")
-            item.image = R.image.seveneleveN()
             return item
         case 5:
             let item = TMBarItem(title: "EMART")
-            item.image = R.image.emart24()
             return item
         default:
             let item = TMBarItem(title: "")

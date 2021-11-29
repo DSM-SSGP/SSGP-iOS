@@ -8,15 +8,24 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
+import KeychainSwift
 
 class ProductListViewModel: ViewModel {
     let disposeBag = DisposeBag()
     let output = Output()
 
     struct Input {
+        let getPopularLists: Signal<Void>
+        let getRecommendLists: Signal<Void>
+        let getLowPriceLists: Signal<Void>
+        let likeButtonIsTapped: Signal<Void>
+        let productPostIsTapped: Signal<String>
     }
 
     struct Output {
+        let getLists: Driver<[ProductList]>
+        let detailID: Driver<String>
     }
 
     func transform(_ input: Input) -> Output {

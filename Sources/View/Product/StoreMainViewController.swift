@@ -10,10 +10,13 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import Moya
 
 class StoreMainViewController: UIViewController, UIScrollViewDelegate {
 
     let disposeBag = DisposeBag()
+
+    let provider = MoyaProvider<SSGPAPI>()
 
     let productModel = [ProductList]()
 
@@ -41,7 +44,6 @@ class StoreMainViewController: UIViewController, UIScrollViewDelegate {
 
     init(index: Int) {
         super.init(nibName: nil, bundle: nil)
-        
     }
 
     required init?(coder: NSCoder) {

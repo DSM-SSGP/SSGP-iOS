@@ -9,7 +9,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import KeychainSwift
 
 class ProductListViewModel: ViewModel {
     let disposeBag = DisposeBag()
@@ -26,9 +25,27 @@ class ProductListViewModel: ViewModel {
     struct Output {
         let getLists: Driver<[ProductList]>
         let detailID: Driver<String>
+        let result: Signal<String>
     }
 
     func transform(_ input: Input) -> Output {
-        return output
+        let getList = PublishRelay<[ProductList]>()
+        let getDetailRow = PublishSubject<String>()
+        let result = PublishSubject<String>()
+
+        input.getPopularLists.asObservable().subscribe(onNext: { listData in
+            HTTPClient.shared.networking(api: .popularityList, model: [ProductList])
+                .subscribe(onNext: { data in
+                    switch data {
+                    case .success:
+                        getList.accept(data)
+                    case .failure:
+                        result.onNext("로드 실패")
+                    }
+                }).disposeBag(by: self.disposeBag)
+        }).disposeBag(by: disposeBag)
+        return Output(getLists: getList.asDriver(onErrorJustReturn: []),
+                      detailID: getDetailRow.asDriver(onErrorJustReturn:""),
+                      result: result.asSignal(onErrorJustReturn: ""))
     }
 }

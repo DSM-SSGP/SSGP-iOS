@@ -20,6 +20,7 @@ class MapViewModel: ViewModel {
     private var isMapFirstLoad = true
 
     struct Input {
+        let viewWillApear: Driver<Void>
         let userLocationIsEnabled: Single<CLLocationCoordinate2D>
         let mapViewDidFinishLoadingMap: Driver<Void>
         let annotaationIsSelected: Driver<MKAnnotationView?>

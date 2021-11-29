@@ -20,6 +20,7 @@ class MapViewModel: ViewModel {
     private var isMapFirstLoad = true
 
     struct Input {
+        let viewWillApear: Driver<Void>
         let userLocationIsEnabled: Single<CLLocationCoordinate2D>
         let mapViewDidFinishLoadingMap: Driver<Void>
         let annotaationIsSelected: Driver<MKAnnotationView?>
@@ -39,7 +40,13 @@ class MapViewModel: ViewModel {
 
     func transform(_ input: Input) -> Output {
 
-        input.userLocationIsEnabled.subscribe(onSuccess: {
+        Observable.combineLatest(
+            input.userLocationIsEnabled.asObservable(),
+            input.viewWillApear.asObservable(),
+            resultSelector: { location, _ in
+                return location
+            }
+        ).subscribe(onNext: {
             HTTPClient.shared.networking(api: .findNearbyStore(
                 String($0.longitude),
                 String($0.latitude)

@@ -12,6 +12,7 @@ import CoreLocation
 import RxSwift
 import RxCocoa
 import FloatingPanel
+import RxViewController
 
 class MapViewController: UIViewController {
 
@@ -74,6 +75,7 @@ class MapViewController: UIViewController {
 
     private func bind() {
         let input = MapViewModel.Input(
+            viewWillApear: self.rx.viewWillAppear.map { _ in () }.asDriver(onErrorJustReturn: ()),
             userLocationIsEnabled: self.locationManager.userLocation(),
             mapViewDidFinishLoadingMap: mapViewDidFinishLoadingMap.asDriver(onErrorJustReturn: ()),
             annotaationIsSelected: annotaationIsSelected.asDriver(onErrorJustReturn: nil),
@@ -83,8 +85,9 @@ class MapViewController: UIViewController {
         )
         let output = viewModel.transform(input)
 
-        output.setAnnotataion.subscribe(onNext: { [weak self] annotations in
-            self?.mapView.addAnnotations(annotations)
+        output.setAnnotataion.subscribe(onNext: { annotations in
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            self.mapView.addAnnotations(annotations)
         })
         .disposed(by: disposeBag)
 

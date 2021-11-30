@@ -31,13 +31,38 @@ class ProductListViewModel: ViewModel {
 
     func transform(_ input: Input) -> Output {
         input.getPopularLists.asObservable().subscribe(onNext: {
-            HTTPClient.shared.networking(api: .popularityList,
-                                         model: [ProductList].self)
-                .subscribe(onSuccess: { _ in
-                    self.output.getLists
-                })
-                .disposed(by: self.disposeBag)
+            HTTPClient.shared.networking(
+                api: .popularityList,
+                model: [ProductList].self
+            ).subscribe(onSuccess: { response in
+                self.output.getLists.accept(response)
+            }, onFailure: { error in
+                print(error)
+            }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
+
+        input.getRecommendLists.asObservable().subscribe(onNext: {
+            HTTPClient.shared.networking(
+                api: .recommendationList,
+                model: [ProductList].self
+            ).subscribe(onSuccess: { response in
+                self.output.getLists.accept(response)
+            }, onFailure: { error in
+                print(error)
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+
+        input.getLowPriceLists.asObservable().subscribe(onNext: {
+            HTTPClient.shared.networking(
+                api: .lowestList,
+                model: [ProductList].self
+            ).subscribe(onSuccess: { response in
+                self.output.getLists.accept(response)
+            }, onFailure: { error in
+                print(error)
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+        
         return output
     }
 }

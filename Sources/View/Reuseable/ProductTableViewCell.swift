@@ -72,11 +72,11 @@ class ProductTableViewCell: UITableViewCell {
 
     // MARK: - public method
 
-    public func bind(title: String, price: String, likeCount: String, store: [String]) {
+    public func bind(title: String, price: Int, likeCount: Int, store: [String]) {
         
         self.titleLabel.text = title
         self.priceLabel.text = "₩\(price)"
-        self.likeCounterLabel.text = likeCount
+        self.likeCounterLabel.text = "\(likeCount)"
         self.setStoreList([.cu, .gs25, .emart24])
 
         self.fireButton.rx.tap

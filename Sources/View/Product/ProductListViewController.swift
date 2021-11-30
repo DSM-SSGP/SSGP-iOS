@@ -12,20 +12,27 @@ import Tabman
 import SnapKit
 import DropDown
 import RxSwift
+import RxCocoa
 import Then
 
 class ProductListViewController: TabmanViewController {
     let disposeBag = DisposeBag()
 
+    private let viewModel = ProductListViewModel()
+
+    private let getPopularLists = PublishSubject<Void>()
+    private let getRecommendLists = PublishSubject<Void>()
+    private let getLowPriceLists = PublishSubject<Void>()
+
     lazy var button = UIDropDownButton().then {
         $0.setAction().subscribe(onNext: {
             switch $0 {
-            case .popularity: break
-                // 인기순 정렬 코드
-            case .suggestion: break
-                // 추천순 정렬 코드
-            case .lowestPrice: break
-                // 최저가순 정렬 코드
+            case .popularity:
+                self.getPopularLists.onNext(())
+            case .suggestion:
+                self.getRecommendLists.onNext(())
+            case .lowestPrice:
+                self.getLowPriceLists.onNext(())
             }
         })
         .disposed(by: disposeBag)
@@ -34,8 +41,6 @@ class ProductListViewController: TabmanViewController {
     lazy var barButtonItem = UIBarButtonItem(customView: button)
 
     private var viewControllers: Array<UIViewController> = []
-
-    private let viewModel = ProductListViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +51,7 @@ class ProductListViewController: TabmanViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         setNavigationBar()
+        bind()
     }
 
     private func setNavigationBar() {
@@ -124,5 +130,18 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
             let item = TMBarItem(title: "")
             return item
         }
+    }
+    private func bind() {
+        let input = ProductListViewModel.Input.init(
+            getPopularLists: self.getPopularLists.asDriver(onErrorJustReturn: ()),
+            getRecommendLists: self.getRecommendLists.asDriver(onErrorJustReturn: ()),
+            getLowPriceLists: self.getLowPriceLists.asDriver(onErrorJustReturn: ()))
+        
+        let output = viewModel.transform(input)
+        
+        output.result
+            .subscribe(onNext: {[weak self] isSuccess in
+                
+            })
     }
 }

@@ -19,14 +19,14 @@ class ProductListViewModel: ViewModel {
         let getPopularLists: Driver<Void>
         let getRecommendLists: Driver<Void>
         let getLowPriceLists: Driver<Void>
-        let likeButtonIsTapped: Driver<Void>
-        let productPostIsTapped: Driver<String>
+//        let likeButtonIsTapped: Driver<Void>
+//        let productPostIsTapped: Driver<String>
     }
 
     struct Output {
         var getLists = PublishRelay<[ProductList]>()
         var detailID = PublishRelay<String>()
-        var result = PublishRelay<String>()
+        var result = PublishRelay<Bool>()
     }
 
     func transform(_ input: Input) -> Output {
@@ -62,7 +62,7 @@ class ProductListViewModel: ViewModel {
                 print(error)
             }).disposed(by: self.disposeBag)
         }).disposed(by: disposeBag)
-        
+
         return output
     }
 }

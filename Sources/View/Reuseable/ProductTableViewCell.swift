@@ -72,13 +72,11 @@ class ProductTableViewCell: UITableViewCell {
 
     // MARK: - public method
 
-    public func bind() {
-        // 후에 파라미터로 데이터 받아서 바인딩
-
-        // demo data
-        self.titleLabel.text = "돼지바"
-        self.priceLabel.text = "₩2500"
-        self.likeCounterLabel.text = "13"
+    public func bind(title: String, price: String, likeCount: String, store: [String]) {
+        
+        self.titleLabel.text = title
+        self.priceLabel.text = "₩\(price)"
+        self.likeCounterLabel.text = likeCount
         self.setStoreList([.cu, .gs25, .emart24])
 
         self.fireButton.rx.tap

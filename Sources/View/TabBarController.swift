@@ -32,11 +32,14 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let productListViewController = UINavigationController().then {
             let rootViewController = ProductListViewController()
             $0.setViewControllers([rootViewController], animated: true)
+            //$0.navigationBar.prefersLargeTitles = true
+            $0.navigationItem.largeTitleDisplayMode = .never
             $0.tabBarItem.setTabBarItem(title: "제품", image: R.image.tabBarMenuIcon()!)
         }
         let myPageViewController = UINavigationController().then {
             let rootViewController = MyPageViewController()
             $0.setViewControllers([rootViewController], animated: true)
+            $0.navigationBar.prefersLargeTitles = true
             $0.tabBarItem.setTabBarItem(title: "마이페이지", image: R.image.tabBarPersonIcon()!)
         }
 

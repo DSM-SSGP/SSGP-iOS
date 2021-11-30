@@ -9,7 +9,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import KeychainSwift
 
 class MyPageViewModel: ViewModel {
 
@@ -17,22 +16,25 @@ class MyPageViewModel: ViewModel {
     let output = Output()
 
     struct Input {
-        let logOutButtonIsTapped: Driver<Void>
-        let notificationSwitchIsOn: Driver<Void>
+        var confirmButtonIsTapped: Driver<String>
     }
 
     struct Output {
-        var logOutResult = PublishRelay<Bool>()
+        var changePasswordResult = PublishRelay<Bool>()
     }
 
     func transform(_ input: Input) -> Output {
-        input.logOutButtonIsTapped.asObservable()
-            .subscribe(
-                onNext: {
-                    KeychainSwift().delete("ACCESS-TOKEN")
-                }
-            ).disposed(by: disposeBag)
-        
+        input.confirmButtonIsTapped.asObservable().subscribe(onNext: { pwd in
+            HTTPClient.shared.networking(
+                api: .updatePassword(pwd),
+                model: EmptyModel.self
+            ).subscribe(onSuccess: { _ in
+                self.output.changePasswordResult.accept(true)
+            }, onFailure: { error in
+                print(error)
+                self.output.changePasswordResult.accept(false)
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
         return output
     }
 }

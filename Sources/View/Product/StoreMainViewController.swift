@@ -15,10 +15,10 @@ import Moya
 class StoreMainViewController: UIViewController, UIScrollViewDelegate {
 
     let disposeBag = DisposeBag()
-
-    let provider = MoyaProvider<SSGPAPI>()
-
-    let productModel = [ProductList]()
+    
+    let productModel = [ProductResponse]()
+    
+    let viewModel = ProductListViewModel()
 
     let tableView = UITableView().then {
         $0.register(ProductTableViewCell.self, forCellReuseIdentifier: "productCell")
@@ -44,6 +44,70 @@ class StoreMainViewController: UIViewController, UIScrollViewDelegate {
 
     init(index: Int) {
         super.init(nibName: nil, bundle: nil)
+        switch index {
+        case 0:
+            viewModel.output.getLists.asObservable()
+                .bind(
+                    to: tableView.rx.items(
+                        cellIdentifier: "productCell",
+                        cellType: ProductTableViewCell.self)) { _, data, cell in
+                    if let cell = cell as? ProductTableViewCell {
+                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
+                    }
+                }.disposed(by: disposeBag)
+        case 1:
+            viewModel.output.gs25Lists.asObservable()
+                .bind(
+                    to: tableView.rx.items(
+                        cellIdentifier: "productCell",
+                        cellType: ProductTableViewCell.self)) { _, data, cell in
+                    if let cell = cell as? ProductTableViewCell {
+                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
+                    }
+                }.disposed(by: disposeBag)
+        case 2:
+            viewModel.output.cuLists.asObservable()
+                .bind(
+                    to: tableView.rx.items(
+                        cellIdentifier: "productCell",
+                        cellType: ProductTableViewCell.self)) { _, data, cell in
+                    if let cell = cell as? ProductTableViewCell {
+                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
+                    }
+                }.disposed(by: disposeBag)
+        case 3:
+            viewModel.output.miniStopLists.asObservable()
+                .bind(
+                    to: tableView.rx.items(
+                        cellIdentifier: "productCell",
+                        cellType: ProductTableViewCell.self)) { _, data, cell in
+                    if let cell = cell as? ProductTableViewCell {
+                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
+                    }
+                }.disposed(by: disposeBag)
+        case 4:
+            viewModel.output.sevenElevenLists.asObservable()
+                .bind(
+                    to: tableView.rx.items(
+                        cellIdentifier: "productCell",
+                        cellType: ProductTableViewCell.self)) { _, data, cell in
+                    if let cell = cell as? ProductTableViewCell {
+                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
+                    }
+                }.disposed(by: disposeBag)
+        case 5:
+            viewModel.output.emart24Lists.asObservable()
+                .bind(
+                    to: tableView.rx.items(
+                        cellIdentifier: "productCell",
+                        cellType: ProductTableViewCell.self)) { _, data, cell in
+                    if let cell = cell as? ProductTableViewCell {
+                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
+                    }
+                }.disposed(by: disposeBag)
+        default:
+            break
+        }
     }
 
     required init?(coder: NSCoder) {

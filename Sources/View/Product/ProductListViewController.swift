@@ -136,12 +136,7 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
             getPopularLists: self.getPopularLists.asDriver(onErrorJustReturn: ()),
             getRecommendLists: self.getRecommendLists.asDriver(onErrorJustReturn: ()),
             getLowPriceLists: self.getLowPriceLists.asDriver(onErrorJustReturn: ()))
-        
-        let output = viewModel.transform(input)
-        
-        output.result
-            .subscribe(onNext: {[weak self] isSuccess in
-                
-            })
+
+        let _ = viewModel.transform(input)
     }
 }

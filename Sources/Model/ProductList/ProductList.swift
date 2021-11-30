@@ -8,10 +8,6 @@
 
 import Foundation
 
-struct ProductList: Codable {
-    var products = [ProductResponse]()
-}
-
 struct ProductResponse: Codable {
     var product_id: String
     var name: String

@@ -12,8 +12,14 @@ import Then
 import RxCocoa
 import RxSwift
 import TextFieldEffects
+import Loaf
 
 class EditProfileViewController: UIViewController {
+    
+    let disposedBag = DisposeBag()
+    let viewModel = MyPageViewModel()
+    
+    private let confirmButtonIsTapped = PublishSubject<String>()
 
     private let currentPWTextField = HoshiTextField().then {
         $0.placeholder = "현재 PW"
@@ -63,6 +69,7 @@ class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         setupSubView()
         view.backgroundColor = R.color.background()
+        bind()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -96,10 +103,43 @@ class EditProfileViewController: UIViewController {
         }
 
         doneButton.snp.makeConstraints {
-            $0.bottom.equalTo(view).offset(30)
+            $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
             $0.height.equalTo(45)
         }
+    }
+
+    private func bind() {
+        let input = MyPageViewModel.Input(
+            confirmButtonIsTapped: self.confirmButtonIsTapped.asDriver(onErrorJustReturn: ""))
+
+        let output = viewModel.transform(input)
+
+        self.doneButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                print("asdf")
+                self?.confirmButtonIsTapped.onNext((
+                    self?.confirmPWTextField.text ?? ""
+                ))
+            }).disposed(by: disposedBag)
+
+        output.changePasswordResult
+            .subscribe(onNext: { [weak self] isSuccess in
+            if isSuccess {
+                Loaf("비밀번호 변경이 완료되었습니다.",
+                     state: .success,
+                     location: .bottom,
+                     sender: self!
+                ).show()
+                self?.navigationController?.popViewController(animated: true)
+            } else {
+                Loaf("비밀번호 변경에 실패하였습니다.",
+                     state: .error,
+                     location: .bottom,
+                     sender: self!
+                ).show()
+            }
+        })
     }
 }

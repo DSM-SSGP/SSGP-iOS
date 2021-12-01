@@ -73,11 +73,10 @@ class ProductTableViewCell: UITableViewCell {
     // MARK: - public method
 
     public func bind(title: String, price: Int, likeCount: Int, store: [String]) {
-        
         self.titleLabel.text = title
         self.priceLabel.text = "₩\(price)"
         self.likeCounterLabel.text = "\(likeCount)"
-        self.setStoreList([.cu, .gs25, .emart24])
+        self.setStoreList(matchStoreList(store: store))
 
         self.fireButton.rx.tap
             .subscribe(onNext: { [weak self] in
@@ -154,6 +153,27 @@ class ProductTableViewCell: UITableViewCell {
 
     private func toggleFireButton() {
         isLiked.accept(!isLiked.value)
+    }
+
+    private func matchStoreList(store: [String]) -> [Brand] {
+        var brandList = [Brand]()
+        store.forEach { item in
+            switch item {
+            case "GS25":
+                brandList.append(.gs25)
+            case "CU":
+                brandList.append(.cu)
+            case "MIMISTOP":
+                brandList.append(.ministop)
+            case "Seven Eleven":
+                brandList.append(.sevenEleven)
+            case "emart24":
+                brandList.append(.emart24)
+            default:
+                break
+            }
+        }
+        return brandList
     }
 
 }

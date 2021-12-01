@@ -9,10 +9,13 @@
 import UIKit
 import SnapKit
 import Then
+import KeychainSwift
+import Loaf
 
 class MyPageViewController: UIViewController {
 
     private let viewModel = MyPageViewModel()
+    private let keychain = KeychainSwift()
 
     private lazy var profileImageView = UIImageView().then {
         $0.image = R.image.profileImage()
@@ -142,6 +145,9 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(LikedProductViewController(), animated: true)
         case [1, 1]:
             navigationController?.pushViewController(EditProfileViewController(), animated: true)
+        case [1, 2]:
+            self.keychain.delete("ACCESS-TOKEN")
+            self.view.window?.rootViewController = LoginViewController()
         default:
             break
         }

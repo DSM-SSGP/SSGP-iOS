@@ -16,6 +16,10 @@ class LikedProductViewController: UIViewController {
 
     let disposeBag = DisposeBag()
 
+    let likedList = PublishSubject<[ProductResponse]>()
+
+    let viewModel = LikeListViewModel()
+
     private let likedListTableView = UITableView().then {
         $0.backgroundColor = R.color.background()
         $0.separatorStyle = .none
@@ -26,23 +30,26 @@ class LikedProductViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = R.color.background()
         setNavigationBar()
-        bind()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+        bind()
     }
 
     private func bind() {
-        let demoData = ["asdf"]
-        let demoOb: Observable<[String]> = Observable.of(demoData)
-
-        demoOb.bind(to: likedListTableView.rx
-                        .items(cellIdentifier: "productCell", cellType: ProductTableViewCell.self)) {
-            (_, _, cell: ProductTableViewCell) in
-            cell.bind()
+        likedList.asObservable()
+            .bind(
+                to: likedListTableView.rx.items(
+                    cellIdentifier: "productCell",
+                    cellType: ProductTableViewCell.self)) { _, element, cell in
+                cell.bind(
+                    title: element.name,
+                    price: element.price,
+                    likeCount: element.like_count,
+                    store: element.brands
+                 )
         }.disposed(by: disposeBag)
-
     }
 
     private func setNavigationBar() {

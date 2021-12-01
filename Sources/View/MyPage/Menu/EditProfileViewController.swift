@@ -13,11 +13,13 @@ import RxCocoa
 import RxSwift
 import TextFieldEffects
 import Loaf
+import KeychainSwift
 
 class EditProfileViewController: UIViewController {
     
     let disposedBag = DisposeBag()
     let viewModel = MyPageViewModel()
+    let keyChain = KeychainSwift()
     
     private let confirmButtonIsTapped = PublishSubject<String>()
 
@@ -117,11 +119,28 @@ class EditProfileViewController: UIViewController {
         let output = viewModel.transform(input)
 
         self.doneButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                print("asdf")
-                self?.confirmButtonIsTapped.onNext((
-                    self?.confirmPWTextField.text ?? ""
-                ))
+            .subscribe(onNext: { [unowned self] in
+                if currentPWTextField.text == self.keyChain.get("PASSWORD") {
+                    if newPWTextField.text == confirmPWTextField.text {
+                        self.confirmButtonIsTapped.onNext((
+                            self.confirmPWTextField.text ?? ""
+                        ))
+                    } else {
+                        Loaf(
+                            "변경할 비밀번호 확인에 실패하였습니다.",
+                             state: .error,
+                             location: .bottom,
+                             sender: self
+                        ).show()
+                    }
+                } else {
+                    Loaf(
+                        "현재 비밀번호를 확인해 주세요.",
+                         state: .error,
+                         location: .bottom,
+                         sender: self
+                    ).show()
+                }
             }).disposed(by: disposedBag)
 
         output.changePasswordResult

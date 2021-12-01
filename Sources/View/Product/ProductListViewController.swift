@@ -18,7 +18,7 @@ import Then
 class ProductListViewController: TabmanViewController {
     let disposeBag = DisposeBag()
 
-    private let viewModel = ProductListViewModel()
+    let viewModel = ProductListViewModel()
 
     private let getPopularLists = PublishSubject<Void>()
     private let getRecommendLists = PublishSubject<Void>()
@@ -40,7 +40,7 @@ class ProductListViewController: TabmanViewController {
 
     lazy var barButtonItem = UIBarButtonItem(customView: button)
 
-    private var viewControllers: Array<UIViewController> = []
+    private var viewControllers: Array<StoreMainViewController> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,6 +137,38 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
             getRecommendLists: self.getRecommendLists.asDriver(onErrorJustReturn: ()),
             getLowPriceLists: self.getLowPriceLists.asDriver(onErrorJustReturn: ()))
 
-        let _ = viewModel.transform(input)
+        let output = viewModel.transform(input)
+
+        output.getLists
+            .subscribe(onNext: {
+            self.viewControllers[0].getLists.onNext($0)
+        }).disposed(by: disposeBag)
+
+        output.gs25Lists
+            .subscribe(onNext: {
+            self.viewControllers[1].getLists.onNext($0)
+        }).disposed(by: disposeBag)
+
+        output.cuLists
+            .subscribe(onNext: {
+            self.viewControllers[2].getLists.onNext($0)
+        }).disposed(by: disposeBag)
+
+        output.miniStopLists
+            .subscribe(onNext: {
+            self.viewControllers[3].getLists.onNext($0)
+        }).disposed(by: disposeBag)
+
+        output.sevenElevenLists
+            .subscribe(onNext: {
+            self.viewControllers[4].getLists.onNext($0)
+        }).disposed(by: disposeBag)
+
+        output.emart24Lists
+            .subscribe(onNext: {
+            self.viewControllers[5].getLists.onNext($0)
+        }).disposed(by: disposeBag)
+        
+        self.getPopularLists.onNext(())
     }
 }

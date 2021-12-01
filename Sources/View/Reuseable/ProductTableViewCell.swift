@@ -129,6 +129,9 @@ class ProductTableViewCell: UITableViewCell {
             $0.top.equalTo(contentView).offset(25)
             $0.bottom.equalTo(contentView).offset(-25)
         }
+        likeCounterLabel.snp.makeConstraints {
+            $0.trailing.equalTo(priceLabel.snp.leading).offset(-10)
+        }
 
     }
 

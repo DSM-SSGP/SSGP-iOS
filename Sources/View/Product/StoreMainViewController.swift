@@ -12,12 +12,12 @@ import Then
 import RxSwift
 import Moya
 
-class StoreMainViewController: UIViewController, UIScrollViewDelegate {
+class StoreMainViewController: UIViewController {
 
     let disposeBag = DisposeBag()
-    
+
     let productModel = [ProductResponse]()
-    
+
     let viewModel = ProductListViewModel()
 
     let tableView = UITableView().then {
@@ -28,9 +28,6 @@ class StoreMainViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpSubViews()
-        tableView.rx
-            .setDelegate(self)
-            .disposed(by: disposeBag)
     }
 
     private func setUpSubViews() {
@@ -49,62 +46,80 @@ class StoreMainViewController: UIViewController, UIScrollViewDelegate {
             viewModel.output.getLists.asObservable()
                 .bind(
                     to: tableView.rx.items(
-                        cellIdentifier: "productCell",
-                        cellType: ProductTableViewCell.self)) { _, data, cell in
-                    if let cell = cell as? ProductTableViewCell {
-                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
-                    }
-                }.disposed(by: disposeBag)
+                        cellIdentifier: "ProductTableViewCell",
+                        cellType: ProductTableViewCell.self)) { _, element, cell in
+                            print("asdfasdfasdf")
+                            cell.bind(
+                                title: element.name,
+                                price: element.price,
+                                likeCount: element.like_count,
+                                store: element.brands)
+            }.disposed(by: disposeBag)
         case 1:
             viewModel.output.gs25Lists.asObservable()
                 .bind(
                     to: tableView.rx.items(
-                        cellIdentifier: "productCell",
-                        cellType: ProductTableViewCell.self)) { _, data, cell in
-                    if let cell = cell as? ProductTableViewCell {
-                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
-                    }
-                }.disposed(by: disposeBag)
+                        cellIdentifier: "ProductTableViewCell",
+                        cellType: ProductTableViewCell.self)) { _, element, cell in
+                            cell.bind(
+                                title: element.name,
+                                price: element.price,
+                                likeCount: element.like_count,
+                                store: element.brands)
+            }.disposed(by: disposeBag)
+
         case 2:
             viewModel.output.cuLists.asObservable()
                 .bind(
                     to: tableView.rx.items(
-                        cellIdentifier: "productCell",
-                        cellType: ProductTableViewCell.self)) { _, data, cell in
-                    if let cell = cell as? ProductTableViewCell {
-                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
-                    }
-                }.disposed(by: disposeBag)
+                        cellIdentifier: "ProductTableViewCell",
+                        cellType: ProductTableViewCell.self)) { _, element, cell in
+                            cell.bind(
+                                title: element.name,
+                                price: element.price,
+                                likeCount: element.like_count,
+                                store: element.brands)
+            }.disposed(by: disposeBag)
+
         case 3:
             viewModel.output.miniStopLists.asObservable()
                 .bind(
                     to: tableView.rx.items(
-                        cellIdentifier: "productCell",
-                        cellType: ProductTableViewCell.self)) { _, data, cell in
-                    if let cell = cell as? ProductTableViewCell {
-                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
-                    }
-                }.disposed(by: disposeBag)
+                        cellIdentifier: "ProductTableViewCell",
+                        cellType: ProductTableViewCell.self)) { _, element, cell in
+                            cell.bind(
+                                title: element.name,
+                                price: element.price,
+                                likeCount: element.like_count,
+                                store: element.brands)
+            }.disposed(by: disposeBag)
+
         case 4:
             viewModel.output.sevenElevenLists.asObservable()
                 .bind(
                     to: tableView.rx.items(
-                        cellIdentifier: "productCell",
-                        cellType: ProductTableViewCell.self)) { _, data, cell in
-                    if let cell = cell as? ProductTableViewCell {
-                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
-                    }
-                }.disposed(by: disposeBag)
+                        cellIdentifier: "ProductTableViewCell",
+                        cellType: ProductTableViewCell.self)) { _, element, cell in
+                            cell.bind(
+                                title: element.name,
+                                price: element.price,
+                                likeCount: element.like_count,
+                                store: element.brands)
+            }.disposed(by: disposeBag)
+
         case 5:
             viewModel.output.emart24Lists.asObservable()
                 .bind(
                     to: tableView.rx.items(
-                        cellIdentifier: "productCell",
-                        cellType: ProductTableViewCell.self)) { _, data, cell in
-                    if let cell = cell as? ProductTableViewCell {
-                        cell.bind(title: data.name, price: data.price, likeCount: data.like_count, store: data.brands)
-                    }
-                }.disposed(by: disposeBag)
+                        cellIdentifier: "ProductTableViewCell",
+                        cellType: ProductTableViewCell.self)) { _, element, cell in
+                            cell.bind(
+                                title: element.name,
+                                price: element.price,
+                                likeCount: element.like_count,
+                                store: element.brands)
+            }.disposed(by: disposeBag)
+
         default:
             break
         }

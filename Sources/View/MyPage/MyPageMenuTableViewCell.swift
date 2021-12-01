@@ -9,6 +9,8 @@
 import UIKit
 import SnapKit
 import Then
+import RxCocoa
+import RxSwift
 
 class MyPageMenuTableViewCell: UITableViewCell {
 
@@ -77,5 +79,9 @@ class MyPageMenuTableViewCell: UITableViewCell {
             $0.centerY.equalToSuperview()
             $0.right.equalToSuperview().offset(-13)
         }
+    }
+    
+    private func bind() {
+        
     }
 }

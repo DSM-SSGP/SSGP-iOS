@@ -34,9 +34,6 @@ let project = Project(
                     outputPaths: [Path.init("$SRCROOT/Supporting Files/R.generated.swift")],
                     outputFileListPaths: []
                 )
-            ],
-            dependencies: [
-                .cocoapods(path: ".")
             ]
         )
     ],

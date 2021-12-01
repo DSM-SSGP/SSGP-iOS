@@ -120,7 +120,7 @@ extension SSGPAPI: TargetType {
 
     var headers: [String: String]? {
         switch self {
-        case .login, .signUp, .findNearbyStore:
+        case .login, .signUp:
             return ["Content-Type": "application/json"]
         case .tokenRefresh:
             return [
@@ -147,6 +147,16 @@ extension SSGPAPI: TargetType {
     private var refreshToken: String {
         let keychain = KeychainSwift()
         return keychain.get("REFRESH-TOKEN") ?? ""
+    }
+
+    private var id: String {
+        let keychain = KeychainSwift()
+        return keychain.get("ID") ?? ""
+    }
+
+    private var password: String {
+        let keychain = KeychainSwift()
+        return keychain.get("PASSWORD") ?? ""
     }
 
 }

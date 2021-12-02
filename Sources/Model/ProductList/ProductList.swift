@@ -9,9 +9,9 @@
 import Foundation
 
 struct ProductResponse: Codable {
-    var product_id: String
+    var product_id: String?
     var name: String
-    var brands: [String]
+    var brands: [String]?
     var selling: [Selling]?
     var price: Int
     var like_count: Int

@@ -34,6 +34,8 @@ class LoginViewModel: ViewModel {
             ).subscribe(onSuccess: { token in
                 self.keychain.set(token.access_token, forKey: "ACCESS-TOKEN")
                 self.keychain.set(token.refresh_token, forKey: "REFRESH-TOKEN")
+                self.keychain.set(id, forKey: "ID")
+                self.keychain.set(pwd, forKey: "PASSWORD")
                 self.output.loginResult.accept(true)
             }, onFailure: { _ in
                 self.output.loginResult.accept(false)

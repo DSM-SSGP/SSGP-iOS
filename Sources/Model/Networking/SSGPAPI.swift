@@ -149,4 +149,14 @@ extension SSGPAPI: TargetType {
         return keychain.get("REFRESH-TOKEN") ?? ""
     }
 
+    private var id: String {
+        let keychain = KeychainSwift()
+        return keychain.get("ID") ?? ""
+    }
+
+    private var password: String {
+        let keychain = KeychainSwift()
+        return keychain.get("PASSWORD") ?? ""
+    }
+
 }

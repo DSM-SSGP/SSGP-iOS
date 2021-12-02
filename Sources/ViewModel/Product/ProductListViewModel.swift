@@ -20,22 +20,48 @@ class ProductListViewModel: ViewModel {
         let getPopularLists: Driver<Void>
         let getRecommendLists: Driver<Void>
         let getLowPriceLists: Driver<Void>
-//        let likeButtonIsTapped: Driver<Void>
-//        let productPostIsTapped: Driver<String>
+       // let likeButtonIsTapped: Driver<Void>
+       // let productPostIsTapped: Driver<String>
+        let searchProductIsTapped: Driver<String>
     }
 
     struct Output {
         var getLists = PublishSubject<[ProductResponse]>()
-        var detailID = PublishRelay<String>()
-        var result = PublishRelay<Bool>()
         var gs25Lists = PublishSubject<[ProductResponse]>()
         var cuLists = PublishSubject<[ProductResponse]>()
         var miniStopLists = PublishSubject<[ProductResponse]>()
         var sevenElevenLists = PublishSubject<[ProductResponse]>()
         var emart24Lists = PublishSubject<[ProductResponse]>()
+
+        var productDetail = PublishSubject<[ProductResponse]>()
+        var likeresult = PublishSubject<Bool>()
     }
 
     func transform(_ input: Input) -> Output {
+        input.searchProductIsTapped.asObservable()
+            .subscribe(onNext: { searchWord in
+                HTTPClient.shared.networking(
+                    api: .searchProduct(searchWord),
+                    model: Search.self
+                ).subscribe(onSuccess: { response in
+                    self.storeFiltering(model: response.application_responses)
+                }, onFailure: { error in
+                    print(error)
+                }).disposed(by: self.disposeBag)
+            }).disposed(by: disposeBag)
+
+//        input.productPostIsTapped.asObservable()
+//            .subscribe(onNext: { id in
+//                HTTPClient.shared.networking(
+//                    api: .productDetail(id),
+//                    model: [ProductResponse].self
+//                ).subscribe(onSuccess: { response in
+//                    self.output.productDetail.onNext(response)
+//                }, onFailure: { error in
+//                    print(error)
+//                }).disposed(by: self.disposeBag)
+//            }).disposed(by: disposeBag)
+
         input.getPopularLists.asObservable().subscribe(onNext: {
             HTTPClient.shared.networking(
                 api: .popularityList,

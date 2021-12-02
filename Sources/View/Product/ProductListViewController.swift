@@ -24,15 +24,22 @@ class ProductListViewController: TabmanViewController {
     private let getRecommendLists = PublishSubject<Void>()
     private let getLowPriceLists = PublishSubject<Void>()
 
+    private let searchProduct = PublishSubject<String>()
+
+    var items = [String]()
+
     lazy var button = UIDropDownButton().then {
         $0.setAction().subscribe(onNext: {
             switch $0 {
             case .popularity:
                 self.getPopularLists.onNext(())
+                self.searchBar.text = ""
             case .suggestion:
                 self.getRecommendLists.onNext(())
+                self.searchBar.text = ""
             case .lowestPrice:
                 self.getLowPriceLists.onNext(())
+                self.searchBar.text = ""
             }
         })
         .disposed(by: disposeBag)
@@ -40,7 +47,11 @@ class ProductListViewController: TabmanViewController {
 
     lazy var barButtonItem = UIBarButtonItem(customView: button)
 
-    private var viewControllers: Array<StoreMainViewController> = []
+    let searchBar = UISearchBar().then {
+        $0.placeholder = "검색"
+    }
+
+    private var viewControllers = [StoreMainViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,8 +68,6 @@ class ProductListViewController: TabmanViewController {
     private func setNavigationBar() {
         navigationItem.title = "제품"
         navigationItem.rightBarButtonItem = barButtonItem
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "검색"
         navigationItem.titleView = searchBar
         navigationItem.hidesSearchBarWhenScrolling = true
         navigationController?.navigationBar.isTranslucent = false
@@ -88,6 +97,22 @@ class ProductListViewController: TabmanViewController {
         }
 
         addBar(bar, dataSource: self, at: .top)
+    }
+
+    private func search() {
+        searchBar.rx.searchButtonClicked
+            .subscribe(onNext: {
+                self.searchBar.resignFirstResponder()
+                self.searchProduct.onNext(self.searchBar.text ?? "")
+                print(self.searchBar.text ?? "")
+            }).disposed(by: disposeBag)
+
+        searchBar.rx.textDidBeginEditing
+            .subscribe(onNext: { [unowned self] _ in
+                if searchBar.text == "" {
+                    searchProduct.onNext("")
+                }
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -135,7 +160,9 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
         let input = ProductListViewModel.Input.init(
             getPopularLists: self.getPopularLists.asDriver(onErrorJustReturn: ()),
             getRecommendLists: self.getRecommendLists.asDriver(onErrorJustReturn: ()),
-            getLowPriceLists: self.getLowPriceLists.asDriver(onErrorJustReturn: ()))
+            getLowPriceLists: self.getLowPriceLists.asDriver(onErrorJustReturn: ()),
+            searchProductIsTapped: self.searchProduct.asDriver(onErrorJustReturn: "")
+        )
 
         let output = viewModel.transform(input)
 
@@ -168,7 +195,9 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
             .subscribe(onNext: {
             self.viewControllers[5].getLists.onNext($0)
         }).disposed(by: disposeBag)
-        
+
         self.getPopularLists.onNext(())
+
+        search()
     }
 }

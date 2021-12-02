@@ -12,7 +12,7 @@ struct ProductResponse: Codable {
     var product_id: String
     var name: String
     var brands: [String]
-    var selling: [Selling]
+    var selling: [Selling]?
     var price: Int
     var like_count: Int
     var image_path: String?
@@ -23,4 +23,8 @@ struct Selling: Codable {
     var content: String
     var selling_price: Int
     var price: Int
+}
+
+struct Search: Codable {
+    var application_responses: [ProductResponse]
 }

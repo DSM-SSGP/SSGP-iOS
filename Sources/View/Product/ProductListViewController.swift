@@ -25,6 +25,7 @@ class ProductListViewController: TabmanViewController {
     private let getLowPriceLists = PublishSubject<Void>()
 
     private let searchProduct = PublishSubject<String>()
+    private let itemSelected = PublishSubject<(String, IndexPath)>()
 
     var items = [String]()
 
@@ -57,21 +58,20 @@ class ProductListViewController: TabmanViewController {
         super.viewDidLoad()
         setNavigationBar()
         setViewControllers()
+        bind()
         view.backgroundColor = R.color.background()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         setNavigationBar()
-        bind()
+        tabBarController?.tabBar.isHidden = false
     }
 
     private func setNavigationBar() {
-        navigationItem.title = "제품"
+        navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = barButtonItem
         navigationItem.titleView = searchBar
         navigationItem.hidesSearchBarWhenScrolling = true
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.isTranslucent = true
     }
 
     private func setViewControllers() {
@@ -83,6 +83,25 @@ class ProductListViewController: TabmanViewController {
         let emartVC = StoreMainViewController(index: 5)
 
         [storeMainVC, GS25VC, CUVC, miniStopVC, sevenElevenVC, emartVC].forEach({ viewControllers.append($0) })
+
+        storeMainVC.tableView.rx.itemSelected.subscribe(onNext: {
+            self.itemSelected.onNext(("ALL", $0))
+        }).disposed(by: disposeBag)
+        CUVC.tableView.rx.itemSelected.subscribe(onNext: {
+            self.itemSelected.onNext(("CU", $0))
+        }).disposed(by: disposeBag)
+        GS25VC.tableView.rx.itemSelected.subscribe(onNext: {
+            self.itemSelected.onNext(("GS25", $0))
+        }).disposed(by: disposeBag)
+        miniStopVC.tableView.rx.itemSelected.subscribe(onNext: {
+            self.itemSelected.onNext(("MINISTOP", $0))
+        }).disposed(by: disposeBag)
+        sevenElevenVC.tableView.rx.itemSelected.subscribe(onNext: {
+            self.itemSelected.onNext(("SEVENELEVEN", $0))
+        }).disposed(by: disposeBag)
+        emartVC.tableView.rx.itemSelected.subscribe(onNext: {
+            self.itemSelected.onNext(("EMART24", $0))
+        }).disposed(by: disposeBag)
 
         self.dataSource = self
 
@@ -161,12 +180,13 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
             getPopularLists: self.getPopularLists.asDriver(onErrorJustReturn: ()),
             getRecommendLists: self.getRecommendLists.asDriver(onErrorJustReturn: ()),
             getLowPriceLists: self.getLowPriceLists.asDriver(onErrorJustReturn: ()),
-            searchProductIsTapped: self.searchProduct.asDriver(onErrorJustReturn: "")
+            searchProductIsTapped: self.searchProduct.asDriver(onErrorJustReturn: ""),
+            itemSelected: self.itemSelected.asDriver(onErrorJustReturn: ("", IndexPath.init()))
         )
 
         let output = viewModel.transform(input)
 
-        output.getLists
+        output.allList
             .subscribe(onNext: {
             self.viewControllers[0].getLists.onNext($0)
         }).disposed(by: disposeBag)
@@ -197,6 +217,10 @@ extension ProductListViewController: PageboyViewControllerDataSource, TMBarDataS
         }).disposed(by: disposeBag)
 
         self.getPopularLists.onNext(())
+
+        output.selectedItem.subscribe(onNext: {
+            self.navigationController?.pushViewController(ProductDetailViewController(productId: $0.product_id ?? "", name: $0.name), animated: true)
+        }).disposed(by: disposeBag)
 
         search()
     }

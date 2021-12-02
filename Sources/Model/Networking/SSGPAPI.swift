@@ -30,7 +30,7 @@ enum SSGPAPI {
     case lowestList
     case productDetail(_ productId: String)
     case likeProduct(_ userId: String, _ productId: String)
-    case searchProduct
+    case searchProduct(_ searchWord: String)
 }
 
 extension SSGPAPI: TargetType {
@@ -64,8 +64,8 @@ extension SSGPAPI: TargetType {
             return "/product/detail/\(productId)"
         case .likeProduct(_, let productId):
             return "/product/detail/\(productId)"
-        case .searchProduct:
-            return "/product/lowPrice"
+        case .searchProduct(let searchWord):
+            return "/product/search?search_word=\(searchWord)"
         }
     }
 

@@ -12,8 +12,16 @@ import Then
 import RxCocoa
 import RxSwift
 import TextFieldEffects
+import Loaf
+import KeychainSwift
 
 class EditProfileViewController: UIViewController {
+    
+    let disposedBag = DisposeBag()
+    let viewModel = MyPageViewModel()
+    let keyChain = KeychainSwift()
+    
+    private let confirmButtonIsTapped = PublishSubject<String>()
 
     private let currentPWTextField = HoshiTextField().then {
         $0.placeholder = "현재 PW"
@@ -63,6 +71,7 @@ class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         setupSubView()
         view.backgroundColor = R.color.background()
+        bind()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -96,10 +105,60 @@ class EditProfileViewController: UIViewController {
         }
 
         doneButton.snp.makeConstraints {
-            $0.bottom.equalTo(view).offset(30)
+            $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview().offset(30)
             $0.trailing.equalToSuperview().offset(-30)
             $0.height.equalTo(45)
         }
+    }
+
+    private func bind() {
+        let input = MyPageViewModel.Input(
+            confirmButtonIsTapped: self.confirmButtonIsTapped.asDriver(onErrorJustReturn: ""))
+
+        let output = viewModel.transform(input)
+
+        self.doneButton.rx.tap
+            .subscribe(onNext: { [unowned self] in
+                if currentPWTextField.text == self.keyChain.get("PASSWORD") {
+                    if newPWTextField.text == confirmPWTextField.text {
+                        self.confirmButtonIsTapped.onNext((
+                            self.confirmPWTextField.text ?? ""
+                        ))
+                    } else {
+                        Loaf(
+                            "변경할 비밀번호 확인에 실패하였습니다.",
+                             state: .error,
+                             location: .bottom,
+                             sender: self
+                        ).show()
+                    }
+                } else {
+                    Loaf(
+                        "현재 비밀번호를 확인해 주세요.",
+                         state: .error,
+                         location: .bottom,
+                         sender: self
+                    ).show()
+                }
+            }).disposed(by: disposedBag)
+
+        output.changePasswordResult
+            .subscribe(onNext: { [weak self] isSuccess in
+            if isSuccess {
+                Loaf("비밀번호 변경이 완료되었습니다.",
+                     state: .success,
+                     location: .bottom,
+                     sender: self!
+                ).show()
+                self?.navigationController?.popViewController(animated: true)
+            } else {
+                Loaf("비밀번호 변경에 실패하였습니다.",
+                     state: .error,
+                     location: .bottom,
+                     sender: self!
+                ).show()
+            }
+        })
     }
 }

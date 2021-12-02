@@ -37,6 +37,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let myPageViewController = UINavigationController().then {
             let rootViewController = MyPageViewController()
             $0.setViewControllers([rootViewController], animated: true)
+            $0.navigationBar.prefersLargeTitles = true
             $0.tabBarItem.setTabBarItem(title: "마이페이지", image: R.image.tabBarPersonIcon()!)
         }
 

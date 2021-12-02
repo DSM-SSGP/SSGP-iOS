@@ -9,6 +9,8 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 import KeychainSwift
 import Loaf
 
@@ -16,6 +18,8 @@ class MyPageViewController: UIViewController {
 
     private let viewModel = MyPageViewModel()
     private let keychain = KeychainSwift()
+
+    private let logOutButtonTapped = PublishSubject<Void>()
 
     private lazy var profileImageView = UIImageView().then {
         $0.image = R.image.profileImage()
@@ -40,7 +44,7 @@ class MyPageViewController: UIViewController {
         setupSubview()
         setNavigationBar()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
     }
@@ -148,8 +152,20 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         case [1, 2]:
             self.keychain.delete("ACCESS-TOKEN")
             self.view.window?.rootViewController = LoginViewController()
+            KeychainSwift().delete("ACCESS-TOKEN")
+            Loaf(
+                "로그아웃되었습니다.",
+                state: .success,
+                location: .bottom,
+                presentingDirection: .vertical,
+                dismissingDirection: .vertical,
+                sender: self).show()
         default:
             break
         }
+    }
+
+    private func bindViewModel() {
+        
     }
 }

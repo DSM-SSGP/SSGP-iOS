@@ -14,11 +14,9 @@ import Moya
 
 class StoreMainViewController: UIViewController {
 
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
 
-    let productModel = [ProductResponse]()
-
-    var getLists = PublishSubject<[ProductResponse]>()
+    let getLists = PublishSubject<[ProductResponse]>()
 
     let tableView = UITableView().then {
         $0.register(ProductTableViewCell.self, forCellReuseIdentifier: "productCell")
@@ -53,12 +51,20 @@ class StoreMainViewController: UIViewController {
             .bind(
                 to: tableView.rx.items(
                     cellIdentifier: "productCell",
-                    cellType: ProductTableViewCell.self)) { index, element, cell in
+                    cellType: ProductTableViewCell.self)) { _, element, cell in
                         cell.bind(
                             title: element.name,
                             price: element.price,
                             likeCount: element.like_count,
-                            store: element.brands)
+                            store: element.brands ?? [""])
         }.disposed(by: disposeBag)
+    }
+}
+
+extension StoreMainViewController: UITableViewDelegate {
+   func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? ProductTableViewCell {
+            cell.disposeCell()
+        }
     }
 }

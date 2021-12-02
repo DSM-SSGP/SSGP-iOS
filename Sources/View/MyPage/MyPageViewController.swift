@@ -17,6 +17,7 @@ import Loaf
 class MyPageViewController: UIViewController {
 
     private let viewModel = MyPageViewModel()
+    private let keychain = KeychainSwift()
 
     private let logOutButtonTapped = PublishSubject<Void>()
 
@@ -149,6 +150,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         case [1, 1]:
             navigationController?.pushViewController(EditProfileViewController(), animated: true)
         case [1, 2]:
+            self.keychain.delete("ACCESS-TOKEN")
+            self.view.window?.rootViewController = LoginViewController()
             KeychainSwift().delete("ACCESS-TOKEN")
             Loaf(
                 "로그아웃되었습니다.",
@@ -157,7 +160,6 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 presentingDirection: .vertical,
                 dismissingDirection: .vertical,
                 sender: self).show()
-            
         default:
             break
         }

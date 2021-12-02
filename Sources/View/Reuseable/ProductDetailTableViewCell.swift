@@ -40,9 +40,6 @@ class ProductDetailTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         setupSubView()
-        bind()
-        originalPriceLabelStrikethrough()
-        toDollar()
     }
 
     required init?(coder: NSCoder) {
@@ -58,21 +55,44 @@ class ProductDetailTableViewCell: UITableViewCell {
 
     // MARK: - public method
 
-    public func bind() {
-        //demo data
-        self.storeImageView.image = R.image.storeIcon()
-        self.eventInfoLabel.text = "1+1"
-        self.originalPriceLabel.text = "1500"
-        self.eventPriceLabel.text = "750"
+    public func bind(store: String, eventInfo: String, orginalPrice: Int, eventPrice: Int) {
+        setStoreIcon(store: store)
+        self.eventInfoLabel.text = eventInfo
+        self.originalPriceLabel.text = "\(orginalPrice)"
+        self.eventPriceLabel.text = String(eventPrice)
+
+        toDollar()
+        originalPriceLabelStrikethrough()
     }
 
     // MARK: - private method
 
     private func originalPriceLabelStrikethrough() {
-        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: originalPriceLabel.text!)
-        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle,
-                                     value: 2, range: NSMakeRange(0, attributeString.length))
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(
+            string: originalPriceLabel.text ?? "")
+        attributeString.addAttribute(
+            NSAttributedString.Key.strikethroughStyle,
+            value: 2,
+            range: NSMakeRange(0, attributeString.length)
+        )
         originalPriceLabel.attributedText = attributeString
+    }
+
+    private func setStoreIcon(store: String) {
+        switch store {
+        case "GS25":
+            self.storeImageView.image = R.image.gs25()
+        case "CU":
+            self.storeImageView.image = R.image.cU()
+        case "SevenEleven":
+            self.storeImageView.image = R.image.seveneleveN()
+        case "MINISTOP":
+            self.storeImageView.image = R.image.ministoP()
+        case "Emart24":
+            self.storeImageView.image = R.image.emart24()
+        default:
+            break
+        }
     }
 
     private func setupSubView() {
@@ -104,7 +124,7 @@ class ProductDetailTableViewCell: UITableViewCell {
     }
 
     private func toDollar() {
-        originalPriceLabel.text = "₩" + originalPriceLabel.text!
-        eventPriceLabel.text = "₩" + eventPriceLabel.text!
+        originalPriceLabel.text = "₩" + (originalPriceLabel.text ?? "")
+        eventPriceLabel.text = "₩" + (eventPriceLabel.text ?? "")
     }
 }

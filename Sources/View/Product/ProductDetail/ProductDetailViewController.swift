@@ -15,6 +15,10 @@ import RxSwift
 class ProductDetailViewController: UIViewController {
 
     let disposeBag = DisposeBag()
+    let getId = PublishSubject<String>()
+    var detailViewModel:  ProductDetailViewModel
+
+    var productId = String()
 
     private let imgView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
@@ -24,7 +28,6 @@ class ProductDetailViewController: UIViewController {
 
     private let productName = UILabel().then {
         $0.font = .boldSystemFont(ofSize: 35)
-        $0.text = "돼지바"
     }
 
     private let countFireLabel = UILabel().then {
@@ -50,12 +53,21 @@ class ProductDetailViewController: UIViewController {
         setupSubView()
         view.backgroundColor = R.color.background()
         fireRadioButton()
-        productDetailTableView.dataSource = self
-        productDetailTableView.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = true
+        bind()
+    }
+
+    init(productId: String, name: String) {
+        self.detailViewModel = ProductDetailViewModel(productId: productId)
+        self.productName.text = name
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func setNavigationBar() {
@@ -74,7 +86,7 @@ class ProductDetailViewController: UIViewController {
         let redButton = buttonImg?.withTintColor(R.color.fire()!, renderingMode: .alwaysTemplate)
         let img = NSTextAttachment(image: redButton!)
         attributeText.append(NSAttributedString(attachment: img))
-        attributeText.append(NSAttributedString(string: "  10"))
+        attributeText.append(NSAttributedString(string: "  0"))
         countFireLabel.attributedText = attributeText
         countFireLabel.sizeToFit()
     }
@@ -114,5 +126,25 @@ class ProductDetailViewController: UIViewController {
                     fireBarButton.tintColor = R.color.notSelectedIcon()
                 }
             }).disposed(by: disposeBag)
+    }
+    private func bind() {
+        let input = ProductDetailViewModel.Input.init()
+
+        let output = detailViewModel.transform(input)
+
+        output.productDetail.subscribe(onNext: {
+            print($0)
+        }).disposed(by: disposeBag)
+
+        output.productDetail.bind(
+            to: productDetailTableView.rx.items(
+            cellIdentifier: "productDetailCell",
+            cellType: ProductDetailTableViewCell.self)) { _, data, cell in
+                cell.bind(
+                    store: data.brand,
+                    eventInfo: data.content,
+                    orginalPrice: data.price,
+                    eventPrice: data.selling_price)
+            }.disposed(by: disposeBag)
     }
 }

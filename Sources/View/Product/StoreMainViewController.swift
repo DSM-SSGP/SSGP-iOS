@@ -53,7 +53,7 @@ class StoreMainViewController: UIViewController {
             .bind(
                 to: tableView.rx.items(
                     cellIdentifier: "productCell",
-                    cellType: ProductTableViewCell.self)) { _, element, cell in
+                    cellType: ProductTableViewCell.self)) { index, element, cell in
                         cell.bind(
                             title: element.name,
                             price: element.price,
